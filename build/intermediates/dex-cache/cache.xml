@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/timsheu/Documents/Project/Android/NuPlayer/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="7bcbf55ec24270f5e32a6d24ada61f150d1d2b82">
+        <dex dex="/Users/timsheu/Documents/Project/Android/NuPlayer/app/build/intermediates/pre-dexed/debug/instant-run_ff872c48c2ca86b64dda25739c3c93ccc86f3270.jar" />
+    </item>
+    <item
+        jar="/Users/timsheu/Documents/Project/Android/NuPlayer/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="548f06de403a9409f00554b3ee12a9fdea0e236c">
+        <dex dex="/Users/timsheu/Documents/Project/Android/NuPlayer/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.4.0_5fdb722ba5ec3c54758d14096cf7ad0c216d9a55.jar" />
+    </item>
+    <item
+        jar="/Users/timsheu/.gradle/caches/modules-2/files-2.1/com.google.zxing/core/3.2.1/2287494d4f5f9f3a9a2bb6980e3f32053721b315/core-3.2.1.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="2287494d4f5f9f3a9a2bb6980e3f32053721b315">
+        <dex dex="/Users/timsheu/Documents/Project/Android/NuPlayer/app/build/intermediates/pre-dexed/debug/core-3.2.1_2ce9745d28f24dd608100b2c4c5871724fa5ee4f.jar" />
+    </item>
+    <item
+        jar="/Users/timsheu/Documents/Project/Android/NuPlayer/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="4f6ff046daa6b3bd2b6243e38aa4402ef4eec67b">
+        <dex dex="/Users/timsheu/Documents/Project/Android/NuPlayer/app/build/intermediates/pre-dexed/debug/instant-run-bootstrap_1e8e32dd8a5ecaa313b94f962cd0f58580a6e42b.jar" />
+    </item>
+    <item
+        jar="/Users/timsheu/Documents/Project/Android/NuPlayer/app/build/intermediates/exploded-aar/de.mrmaffen/vlc-android-sdk/1.9.8/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="eb6ca9c598dfdb1f5426d7ff49e4cc5bfc517da4">
+        <dex dex="/Users/timsheu/Documents/Project/Android/NuPlayer/app/build/intermediates/pre-dexed/debug/de.mrmaffen-vlc-android-sdk-1.9.8_96daa6774a13239fcd843f0e7d4dca9dbc66eb13.jar" />
+    </item>
+    <item
+        jar="/Users/timsheu/Documents/Project/Android/NuPlayer/app/build/intermediates/exploded-aar/com.android.support/design/23.2.1/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="72961d8b453b46e277702f18de9d210bc019e36e">
+        <dex dex="/Users/timsheu/Documents/Project/Android/NuPlayer/app/build/intermediates/pre-dexed/debug/com.android.support-design-23.2.1_fe9d0879d4af0ca2362216a60c722f932a0b91d5.jar" />
+    </item>
+    <item
+        jar="/Users/timsheu/Documents/Project/Android/NuPlayer/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/libs/internal_impl-23.4.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="ea3c07504d2c8f4b13aa17c45c1b68ed9c1c3674">
+        <dex dex="/Users/timsheu/Documents/Project/Android/NuPlayer/app/build/intermediates/pre-dexed/debug/internal_impl-23.4.0_4d03415a3d7c8763383bfded744a3758ca6640e2.jar" />
+    </item>
+    <item
+        jar="/Users/timsheu/Documents/Project/Android/NuPlayer/app/build/intermediates/exploded-aar/com.aurelhubert/ahbottomnavigation/1.1.8/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="f29021effc25996fe2b0539f020241f059230451">
+        <dex dex="/Users/timsheu/Documents/Project/Android/NuPlayer/app/build/intermediates/pre-dexed/debug/com.aurelhubert-ahbottomnavigation-1.1.8_41b612dbd2e02f8353170f75c738de40dab7da49.jar" />
+    </item>
+    <item
+        jar="/Users/timsheu/Documents/AndroidSDK/sdk/extras/android/m2repository/com/android/support/support-annotations/23.4.0/support-annotations-23.4.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="ffbe55fdb2bb456b1485831706a9eac3300bb6b8">
+        <dex dex="/Users/timsheu/Documents/Project/Android/NuPlayer/app/build/intermediates/pre-dexed/debug/support-annotations-23.4.0_d8d82732cdd15bd379af45e5ce3166530e49f13c.jar" />
+    </item>
+    <item
+        jar="/Users/timsheu/Documents/Project/Android/NuPlayer/app/build/intermediates/exploded-aar/info.hoang8f/android-segmented/1.0.6/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="692a913dff3246e0cc5369c2508f5970ecfeca01">
+        <dex dex="/Users/timsheu/Documents/Project/Android/NuPlayer/app/build/intermediates/pre-dexed/debug/info.hoang8f-android-segmented-1.0.6_bc025660f1e34aa23255f6bcac85109a3d486e87.jar" />
+    </item>
+    <item
+        jar="/Users/timsheu/Documents/Project/Android/NuPlayer/app/build/intermediates/exploded-aar/com.android.support/percent/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="91c2541305eec5a688f3a60529d974e48f77d760">
+        <dex dex="/Users/timsheu/Documents/Project/Android/NuPlayer/app/build/intermediates/pre-dexed/debug/com.android.support-percent-23.4.0_8251a2c77d66054d3a5e550648f16420e3d2de14.jar" />
+    </item>
+    <item
+        jar="/Users/timsheu/Documents/Project/Android/NuPlayer/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="c2c594cace5d83a3227b2b6e658ecbfd586d3ed9">
+        <dex dex="/Users/timsheu/Documents/Project/Android/NuPlayer/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-23.4.0_e7ba7fd5a516f9b8fa146e1ad2c0b85d6008f22f.jar" />
+    </item>
+    <item
+        jar="/Users/timsheu/Documents/Project/Android/NuPlayer/app/build/intermediates/exploded-aar/com.android.support/preference-v7/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="b954d8588de65c67c1ec482678620845bbb5f737">
+        <dex dex="/Users/timsheu/Documents/Project/Android/NuPlayer/app/build/intermediates/pre-dexed/debug/com.android.support-preference-v7-23.4.0_7b583904977f115297ca330e9c5979888120a8f8.jar" />
+    </item>
+    <item
+        jar="/Users/timsheu/Documents/Project/Android/NuPlayer/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
+        <dex dex="/Users/timsheu/Documents/Project/Android/NuPlayer/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-23.4.0_cb9a6ef1fea4a53f806f3ce02b711a115bf36b2c.jar" />
+    </item>
+    <item
+        jar="/Users/timsheu/Documents/Project/Android/NuPlayer/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="de4db3785756bfb0915a9f59a9b3f2fea7407be4">
+        <dex dex="/Users/timsheu/Documents/Project/Android/NuPlayer/app/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-23.4.0_0778e935d91024d5a5ed9a62bd1762b6f6a0c441.jar" />
+    </item>
+    <item
+        jar="/Users/timsheu/Documents/Project/Android/NuPlayer/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="ec75036c3c52e451d0cde50a5aedaf5fd32354a0">
+        <dex dex="/Users/timsheu/Documents/Project/Android/NuPlayer/app/build/intermediates/pre-dexed/debug/com.android.support-recyclerview-v7-23.4.0_565f6d7f5ec96486dac5e6b3a748e7126af6e3ea.jar" />
+    </item>
+
+</items>
