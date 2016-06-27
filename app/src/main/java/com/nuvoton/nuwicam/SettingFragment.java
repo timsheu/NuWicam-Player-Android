@@ -55,10 +55,8 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         Log.d(TAG, "onCreate: " + preferenceName + " pref name: " + getPreferenceManager().getSharedPreferencesName());
         // Inflate the layout for this fragment
 
-        if (platform.equals("SkyEye")) {
-            addPreferencesFromResource(R.xml.settings);
-        } else if (platform.equals("DVR")) {
-            addPreferencesFromResource(R.xml.settings_dvr);
+        if (platform.equals("NuWicam")) {
+            addPreferencesFromResource(R.xml.settings_nuwicam);
         }
 
         configure = ReadConfigure.getInstance(getActivity().getApplicationContext());
@@ -267,16 +265,6 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
 //                    sharedPreference.edit().putString(key, "0");
 //                }
 //                break;
-            case "Wi-Fi QR Code":
-                Log.d(TAG, "determineSettings: Wi-Fi QR Code");
-                String QRCode, SSID = sharedPreference.getString("SSID", "SkyEye"), Password = sharedPreference.getString("Password", "12345678");
-                QRCode = "BOOTPROTO DHCP\nIPADDR 192.168.3.1\nGATEWAY 192.168.3.1\nSSID \"NT_ZY\"\nAUTH_MODE WPA2PSK\nENCRYPT_TYPE AES\nAUTH_KEY 12345678\nWPS_TRIG_KEY HOME\n\nAP_IPADDR 192.168.100.1\nAP_SSID \"" +
-                SSID + "\"\nAP_AUTH_MODE WPA2PSK\nAP_ENCRYPT_TYPE AES\nAP_AUTH_KEY " + Password + "\nAP_CHANNEL AUTO\n\nBRIF";
-                callSend = false;
-                Intent intent = new Intent(getActivity(), QRCode.class);
-                intent.putExtra("QR code", QRCode);
-                startActivity(intent);
-                break;
             case "Recorder Status":
                 ArrayList<Map> recordCommandSet = configure.recordCommandSet;
                 String recorderStatus = sharedPreference.getString(key, "0");

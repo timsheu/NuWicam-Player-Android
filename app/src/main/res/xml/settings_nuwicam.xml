@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:key="Camera Setup"
+        android:title="@string/camera_category_title"
+        android:textSize="20dp"
+        android:layout="@layout/p_category_camera_layout">
+        <EditTextPreference
+            android:key="Name"
+            android:title="Camera Name"
+            android:summary="Click to custom camera name."
+            android:defaultValue="Local-Camera"
+            />
+        <EditTextPreference
+            android:key="URL"
+            android:title="Camera URL"
+            android:summary="Click to edit camera URL address."
+            android:defaultValue="rtsp://192.168.100.1/cam1/h264"
+            />
+        <ListPreference
+            android:key="Resolution"
+            android:title="Resolution"
+            android:summary="%s"
+            android:entries="@array/resolution_list"
+            android:entryValues="@array/resolution_value_list"
+            android:dialogTitle="Choose Resolution"
+            android:defaultValue="0"
+            />
+        <ListPreference
+            android:key="Bit Rate"
+            android:title="Bit Rate"
+            android:summary="%s"
+            android:entryValues="@array/bitrate_value_list"
+            android:entries="@array/bitrate_list"
+            android:defaultValue="1024"
+            />
+        <ListPreference
+            android:key="Restart Stream"
+            android:title="Restart Stream"
+            android:summary="Click to restart stream, and take effect."
+            android:entryValues="@array/restart_stream_value_list"
+            android:entries="@array/restart_device_list"
+            android:defaultValue="1"
+            />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="Wi-Fi Setup"
+        android:title="@string/wifi_category_title"
+        android:layout="@layout/p_category_wifi_layout">
+
+        <EditTextPreference
+            android:key="SSID"
+            android:title="SSID"
+            android:summary="Click to edit Soft-AP SSID."
+            android:defaultValue="NuWicam"
+            />
+        <EditTextPreference
+            android:key="Password"
+            android:title="Password"
+            android:summary="Click to edit Soft-AP Password."
+            android:defaultValue="12345678"
+            />
+
+        <ListPreference
+            android:key="Show Password"
+            android:title="Show Password"
+            android:summary="Click to show password"
+            android:entryValues="@array/show_password"
+            android:entries="@array/show_password_value"
+            />
+
+        <ListPreference
+            android:key="Wi-Fi QR Code"
+            android:title="Wi-Fi QR Code"
+            android:summary="Click to show Wi-Fi QR Code."
+            android:entryValues="@array/restart_wifi_value_list"
+            android:entries="@array/restart_device_list"
+            />
+
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="APP Information"
+        android:title="@string/version_category_title"
+        android:layout="@layout/p_category_version_layout">
+
+        <Preference
+            android:key="APP Version number"
+            android:title="APP Version Number"
+            android:summary="1.0.6"
+            />
+
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

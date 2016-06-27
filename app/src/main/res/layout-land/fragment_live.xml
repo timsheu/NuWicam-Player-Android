@@ -65,28 +65,16 @@
 
     </RelativeLayout>
 
-    <ImageButton
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:id="@+id/snapshotButton"
-        android:layout_alignTop="@+id/videoView"
-        android:layout_alignEnd="@+id/videoView"
-        android:src="@drawable/snapshot"
-        android:scaleType="fitCenter"
-        android:background="#00ffffff"
-        android:paddingRight="5dp"
-        />
-
     <ImageView
         android:layout_width="8dp"
         android:layout_height="8dp"
         android:id="@+id/redDot"
-        android:layout_alignBottom="@+id/snapshotButton"
-        android:layout_toStartOf="@+id/snapshotButton"
+        android:layout_alignTop="@+id/videoView"
+        android:layout_alignEnd="@+id/videoView"
         android:src="@drawable/recordflashoff"
         android:scaleType="centerCrop"
         android:layout_marginRight="5dp"
-        android:layout_marginBottom="5dp" />
+        android:layout_marginTop="5dp" />
 
     <TextView
         android:layout_width="wrap_content"

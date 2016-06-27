@@ -11,5 +11,9 @@
         <attr name="maxValue" format="integer" />
         <attr name="currentValue" format="integer" />
     </declare-styleable>
+    
+    <declare-styleable name="AHBottomNavigationBehavior_Params">
+        <attr name="tabLayoutId" format="reference" />
+    </declare-styleable>
 
 </resources>

@@ -6,7 +6,19 @@
 		<key>Name</key>
 		<string>Reboot System</string>
 		<key>Base Command</key>
-		<string>restart.cgi</string>
+		<string>restart.cgi?group=board</string>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>Restart Wi-Fi</string>
+		<key>Base Command</key>
+		<string>restart.cgi?group=wifi</string>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>Restart Stream</string>
+		<key>Base Command</key>
+		<string>restart.cgi?group=stream</string>
 	</dict>
 </array>
 </plist>

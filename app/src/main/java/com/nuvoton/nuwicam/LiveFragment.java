@@ -92,13 +92,6 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
                 break;
             case R.id.expandButton:
                 Log.d(TAG, "onClick: expand");
-                if (orientation == Configuration.ORIENTATION_LANDSCAPE){
-                    orientation = Configuration.ORIENTATION_PORTRAIT;
-                    getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                }else {
-                    orientation = Configuration.ORIENTATION_LANDSCAPE;
-                    getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                }
                 break;
             default:
                 break;
@@ -136,10 +129,6 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
     }
 
     public void registerUI(){
-        snapshotButton = (ImageButton) thisView.findViewById(R.id.snapshotButton);
-        snapshotButton.setOnClickListener(this);
-        snapshotButton.setEnabled(false);
-
         playButton = (ImageButton) thisView.findViewById(R.id.playButton);
         playButton.setOnClickListener(this);
         playButton.setEnabled(false);

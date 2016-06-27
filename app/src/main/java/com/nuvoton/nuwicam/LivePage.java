@@ -26,8 +26,8 @@ public class LivePage extends AppCompatActivity implements LiveFragment.OnHideBo
     }
 
     private int index=0;
-    private String platform = "";
-    private String cameraSerial = "0";
+    private String platform = "NuWicam";
+    private String cameraSerial = "5";
     private boolean clicked = false;
     private boolean isLandscape = false;
     private static final String TAG = "SkyEye", FRAGMENT_TAG = "CURRENT_FRAGMENT_INDEX";
@@ -40,7 +40,7 @@ public class LivePage extends AppCompatActivity implements LiveFragment.OnHideBo
         View decorView = getWindow().getDecorView();
 
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
-            if (index != 2){
+            if (index != 1){
                 bottomNavigation.hideBottomNavigation(true);
                 decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
                 isLandscape = true;
@@ -57,28 +57,16 @@ public class LivePage extends AppCompatActivity implements LiveFragment.OnHideBo
         int orientation = getWindowManager().getDefaultDisplay().getRotation();
         View decorView = getWindow().getDecorView();
         setContentView(R.layout.activity_live_page);
-        platform = getIntent().getStringExtra("Platform");
-        try{
-            cameraSerial = getIntent().getStringExtra("CameraSerial");
-        }catch (Exception e){
-            e.printStackTrace();
-        }
         Log.d(TAG, "onCreate:" + platform + ", " + cameraSerial);
         initUI();
         switch (orientation){
             case Surface.ROTATION_90:
             case Surface.ROTATION_270:
-                if (index != 2){
+                if (index != 1){
                     bottomNavigation.hideBottomNavigation(true);
                     decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
                     isLandscape = true;
                 }
-                break;
-            case Surface.ROTATION_0:
-            case Surface.ROTATION_180:
-                bottomNavigation.restoreBottomNavigation(true);
-                decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-                isLandscape = false;
                 break;
         }
 
@@ -104,11 +92,9 @@ public class LivePage extends AppCompatActivity implements LiveFragment.OnHideBo
 
         bottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_navigation);
         AHBottomNavigationItem liveItem = new AHBottomNavigationItem("Live", R.drawable.livetab);
-        AHBottomNavigationItem fileItem = new AHBottomNavigationItem("File", R.drawable.foldertab);
         AHBottomNavigationItem settingItem = new AHBottomNavigationItem("Setting", R.drawable.geartab);
 
         bottomNavigationItems.add(liveItem);
-        bottomNavigationItems.add(fileItem);
         bottomNavigationItems.add(settingItem);
 
         bottomNavigation.addItems(bottomNavigationItems);
@@ -123,16 +109,10 @@ public class LivePage extends AppCompatActivity implements LiveFragment.OnHideBo
 
         bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
-            public void onTabSelected(int position, boolean wasSelected){
+            public boolean onTabSelected(int position, boolean wasSelected){
                 index = position;
                 if (position == 0){
                     LiveFragment fragment = LiveFragment.newInstance(bundle);
-                    fragment.setArguments(bundle);
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.fragment_content, fragment)
-                            .commit();
-                }else if (position == 1){
-                    FileFragment fragment = FileFragment.newInstance(bundle);
                     fragment.setArguments(bundle);
                     fragmentManager.beginTransaction()
                             .replace(R.id.fragment_content, fragment)
@@ -145,6 +125,7 @@ public class LivePage extends AppCompatActivity implements LiveFragment.OnHideBo
                             .commit();
                 }
                 bottomNavigation.setNotification(0, position);
+                return true;
             }
         });
         changeFragment(0);
@@ -157,11 +138,6 @@ public class LivePage extends AppCompatActivity implements LiveFragment.OnHideBo
         index = savedIndex;
         if (index == 0){
             LiveFragment fragment = LiveFragment.newInstance(bundle);
-            fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_content, fragment)
-                    .commit();
-        }else if (index == 1){
-            FileFragment fragment = FileFragment.newInstance(bundle);
             fragmentManager.beginTransaction()
                     .replace(R.id.fragment_content, fragment)
                     .commit();

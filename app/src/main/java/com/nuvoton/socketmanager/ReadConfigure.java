@@ -46,11 +46,12 @@ public class ReadConfigure {
     public static ReadConfigure getInstance(Context context){
         Log.d(TAG, "getInstance: ");
         contextLocal = context;
-        for (int i=0; i<5; i++){
+//        for (int i=0; i<5; i++){
+        int i = 5; // hard coded for NuWicam Player
             if (isSharedpreferenceCreated(i) == false) {
                 initSharedPreference(i, true);
             }
-        }
+//        }
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -200,6 +201,10 @@ public class ReadConfigure {
             editor.putString("Name", "DEMO-NO-IP");
             editor.putString("URL", "rtsp://nuvoton.no-ip.biz/cam1/h264");
             set.add("rtsp://nuvoton.no-ip.biz/cam1/h264");
+            set.add("rtsp://nuvoton.no-ip.biz/cam1/mpeg4");
+        }else if (cameraSerial == 5){
+            editor.putString("Name", "LOCAL-IP");
+            editor.putString("URL", "rtsp://192.168.100.1/cam1/mpeg4");
             set.add("rtsp://nuvoton.no-ip.biz/cam1/mpeg4");
         }
         editor.putStringSet("History", set);
