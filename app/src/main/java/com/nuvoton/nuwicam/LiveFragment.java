@@ -35,6 +35,8 @@ import com.nuvoton.socketmanager.ReadConfigure;
 import com.nuvoton.socketmanager.SocketInterface;
 import com.nuvoton.socketmanager.SocketManager;
 
+import org.json.JSONObject;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -451,6 +453,11 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
 
     }
 
+    @Override
+    public void updateSettingContent(String category, JSONObject jsonObject) {
+
+    }
+
     private String getDeviceURL(){
         String cameraName = "Setup Camera " + cameraSerial;
         SharedPreferences preference = getActivity().getSharedPreferences(cameraName, Context.MODE_PRIVATE);
@@ -459,20 +466,19 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
         localURL = new String(urlString);
         String [] ipCut = urlString.split("/");
         String ip = ipCut[2];
-        String url = "http://" + ip + ":80/";
+        String url = "http://" + ip + ":80/cgi-bin/";
         return url;
     }
 
     private void sendCheckStorage(){
         String command = getDeviceURL();
         sString baseCommand, action;
-        ArrayList<Map> fileCommandSet = configure.infoCommandSet;
+        ArrayList<Map> fileCommandSet = configure.videoCommandSet;
         Map<String, PListObject> targetCommand = fileCommandSet.get(0);
         baseCommand = (sString) targetCommand.get("Base Command");
-        action = (sString) targetCommand.get("Sub Command");
-        command = command + baseCommand.getValue() + "?" + action.getValue();
+        command = command + baseCommand.getValue();
         if (socketManager != null){
-            socketManager.executeSendGetTask(command, SocketManager.CMDCHECK_STORAGE);
+            socketManager.executeSendGetTask(command, SocketManager.CMDGET_ALIVE);
         }
     }
 

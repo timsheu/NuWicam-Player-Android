@@ -56,26 +56,29 @@
             android:title="SSID"
             android:summary="Click to edit Soft-AP SSID."
             android:defaultValue="NuWicam"
+            android:maxLength="12"
             />
         <EditTextPreference
             android:key="Password"
             android:title="Password"
             android:summary="Click to edit Soft-AP Password."
             android:defaultValue="12345678"
+            android:inputType="textPassword"
+            android:maxLength="15"
             />
 
         <ListPreference
             android:key="Show Password"
             android:title="Show Password"
             android:summary="Click to show password"
-            android:entryValues="@array/show_password"
-            android:entries="@array/show_password_value"
+            android:entryValues="@array/show_password_value"
+            android:entries="@array/show_password"
             />
 
         <ListPreference
-            android:key="Wi-Fi QR Code"
-            android:title="Wi-Fi QR Code"
-            android:summary="Click to show Wi-Fi QR Code."
+            android:key="Restart Wi-Fi"
+            android:title="Restart Wi-Fi"
+            android:summary="Click to restart Wi-Fi."
             android:entryValues="@array/restart_wifi_value_list"
             android:entries="@array/restart_device_list"
             />

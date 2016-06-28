@@ -3,6 +3,7 @@ package com.nuvoton.socketmanager;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.nuvoton.nuwicam.FileContent;
 
 import org.json.JSONObject;
@@ -16,6 +17,7 @@ import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Timer;
 
 /**
@@ -26,23 +28,15 @@ public class SocketManager {
     private SocketInterface socketInterface = null;
     private URL url;
     private static final String TAG = "SocketManager";
-    public static final String CMDSNAPSHOT="0";
-    public static final String CMDRSTART="1";
-    public static final String CMDCHECKSD="2";
-    public static final String CMDSDCAP="3";
-    public static final String CMDRSTOP="4";
-    public static final String CMD_FILELIST="5";
-    public static final String CMDCHECK_STORAGE="6";
-    public static final String CMDSET_RESOLUTION="7";
-    public static final String CMDSET_ADAPTIVE="8";
-    public static final String CMDSET_FIXED_BITRATE="9";
-    public static final String CMDSET_FIXED_QUALITY="10";
-    public static final String CMDSET_FPS="11";
-    public static final String CMDSET_MUTE="12";
-    public static final String CMDSET_REBOOT="13";
-    public static final String CMDSET_PLUGIN="14";
-    public static final String CMDGET_ALL="15";
-    public static final String CMDSET_RECORD="16";
+    public static final String CMDSET_RESTART_STREAM="0";
+    public static final String CMDSET_RESTART_WIFI="1";
+    public static final String CMDSET_LIST_WIFI="2";
+    public static final String CMDSET_UPDATE_WIFI="3";
+    public static final String CMDSET_LIST_VIDEO="4";
+    public static final String CMDSET_UPDATE_VIDEO="5";
+    public static final String CMDGET_ALL="6";
+    public static final String CMDGET_ALIVE="7";
+
 
 
     Timer timer = new Timer();
@@ -81,6 +75,9 @@ public class SocketManager {
 
         try {
             InputStream In = OpenHttpConnection(url);
+            if (In == null){
+                return null;
+            }
             InputStreamReader isr = new InputStreamReader(In);
             int count = 0;
             int charRead;
@@ -107,7 +104,7 @@ public class SocketManager {
             e.printStackTrace();
         }
 
-        return  null;
+        return null;
     }
 
     private class SendGetTask extends AsyncTask<String,Void,String> {
@@ -122,113 +119,64 @@ public class SocketManager {
         protected void onPostExecute(String result) {
             try {
                 JSONObject jsonObject;
-                if(httpcmd.equals(CMDSNAPSHOT)){
+                if(httpcmd.equals(CMDGET_ALL)){
                     jsonObject = new JSONObject(result);
-                    if(jsonObject.getString("value").equals("0")) {
-                        socketInterface.showToastMessage("Snapshot Success !!");
-                    }else{
-                        socketInterface.showToastMessage("Snapshot Fail !!");
-                    }
-                }else if (httpcmd.equals(CMDRSTART)) {
-                    jsonObject = new JSONObject(result);
-                    if (jsonObject.getString("value").equals("0")) {
-//                        Toast.makeText(getBaseContext(), "start record success", Toast.LENGTH_SHORT).show();
-                    } else {
-                    }
-                }else if(httpcmd.equals(CMDRSTOP)){
-                    jsonObject = new JSONObject(result);
-                    if (jsonObject.getString("value").equals("0")){
-                        timer.cancel();
-                    } else {
-                    }
-                }else if(httpcmd.equals(CMDCHECKSD)){
-                    jsonObject = new JSONObject(result);
-                    if(jsonObject.getString("value").equals("0")) {
-                    }
-                }else if(httpcmd.equals(CMDSDCAP)){
-                    String [] tmp = result.split("\n|\r");
-
-                    jsonObject = new JSONObject(tmp[3]);
-                    //Log.d(TAG,jsonObject.getString("unit"));
-                    // int unit = iInteger.parseInt(jsonObject.getString("unit"));
-                    int available=Integer.parseInt(jsonObject.getString("available"));
-                    float avilable1=(((float)available)/(1024*1024));
-                    Log.d(TAG, String.valueOf(avilable1));
-                }else if (httpcmd.equals(CMD_FILELIST)) {
-                    String [] fileList = result.split("\n");
-                    ArrayList<FileContent> fileContentList = new ArrayList<>();
-                    int i = 0;
-                    for (String s: fileList) {
-                        if (s.contains(".mp4")){
-                            String [] temp = s.split("_");
-                            String time = new String(temp[2]);
-                            String [] temp2 = time.split("\\.");
-                            String time2 = new String(temp2[0]);
-                            SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
-                            Date date = sdf.parse(time2);
-                            SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                            FileContent content = new FileContent(s, sdf2.format(date), String.valueOf(i));
-                            fileContentList.add(content);
-                            i++;
-                            Log.d(TAG, "onPostExecute: " + sdf2.format(date));
-                        }
-                    }
-                    socketInterface.updateFileList(fileContentList);
-                }else if (httpcmd.equals(CMDCHECK_STORAGE)){
-                    if(result != null) {
-                        socketInterface.deviceIsAlive();
-                    }
-                }else if (httpcmd.equals(CMDSET_RESOLUTION)){
-                    Log.d(TAG,"set resolution");
-                }else if (httpcmd.equals(CMDSET_ADAPTIVE)){
-                    Log.d(TAG,"set adaptive");
-                    commandList.remove(0);
-                    if (commandList.size() > 0){
-                        executeSendGetTaskList(commandList, CMDSET_ADAPTIVE);
-                    }
-                }else if (httpcmd.equals(CMDSET_FIXED_BITRATE)){
-                    Log.d(TAG,"set fixed bitrate");
-                }else if (httpcmd.equals(CMDSET_FIXED_QUALITY)){
-                    Log.d(TAG,"set fixed quality");
-                }else if (httpcmd.equals(CMDSET_FPS)){
-                    Log.d(TAG,"set fps");
-                }else if (httpcmd.equals(CMDSET_MUTE)){
-                    Log.d(TAG,"set mute");
-                }else if (httpcmd.equals(CMDSET_REBOOT)){
-                    Log.d(TAG,"reboot");
-                    socketInterface.showToastMessage("The device is rebooted, please connect it in Wi-Fi setting page!");
-                }else if (httpcmd.equals(CMDSET_PLUGIN)){
-                    Log.d(TAG,"send plugin");
-                }else if (httpcmd.equals(CMDGET_ALL)){
-                    jsonObject = new JSONObject(result);
-                    String value = jsonObject.getString("value");
                     switch (commandList.size()){
                         case 0:
                             return;
                         case 1:
-                            socketInterface.updateSettingContent("Recorder Status", value);
+                            socketInterface.updateSettingContent("List Wi-Fi Setting", jsonObject);
                             break;
                         case 2:
-                            socketInterface.updateSettingContent("Available Storage", value);
+                            socketInterface.updateSettingContent("List Video Setting", jsonObject);
                             break;
-                        case 3:
-                            socketInterface.updateSettingContent("FPS", value);
-                            break;
-                        case 4:
-                            socketInterface.updateSettingContent("Resolution", value);
-                            break;
+
                     }
                     commandList.remove(0);
                     if (commandList.size() >0){
                         executeSendGetTaskList(commandList, CMDGET_ALL);
                     }
                     Log.d(TAG,"get all");
-                }else if(httpcmd.equals(CMDSET_RECORD)){
+                }else if(httpcmd.equals(CMDSET_LIST_VIDEO)){
                     jsonObject = new JSONObject(result);
-                    String value = jsonObject.getString("value");
                     Log.d(TAG,"set recorder");
-                    if (value.equals("0")){
-                        socketInterface.updateSettingContent("Recorder Status", value);
+                    socketInterface.updateSettingContent("", jsonObject);
+                }else if(httpcmd.equals(CMDSET_LIST_WIFI)){
+                    jsonObject = new JSONObject(result);
+                    Log.d(TAG,"set recorder");
+                    if (result != null){
+                        socketInterface.updateSettingContent("List Wi-Fi Setting", jsonObject);
+                    }
+                }else if(httpcmd.equals(CMDSET_UPDATE_VIDEO)){
+                    jsonObject = new JSONObject(result);
+                    Log.d(TAG,"set recorder");
+                    if (result != null){
+                        socketInterface.updateSettingContent("List Video Setting", jsonObject);
+                    }
+                }else if(httpcmd.equals(CMDSET_UPDATE_WIFI)){
+                    jsonObject = new JSONObject(result);
+                    Log.d(TAG,"set recorder");
+                    if (result != null){
+                        socketInterface.updateSettingContent("Recorder Status", jsonObject);
+                    }
+                }else if(httpcmd.equals(CMDGET_ALIVE)){
+                    if (result != null){
+                        Log.d(TAG,"device is alive");
+                        socketInterface.deviceIsAlive();
+                    }else {
+                        Log.d(TAG,"device is not alive:");
+                    }
+                }else if(httpcmd.equals(CMDSET_RESTART_STREAM)){
+                    if (result != null){
+                        Log.d(TAG,"Stream restarted");
+                    }else {
+                        Log.d(TAG,"Stream restart fail");
+                    }
+                }else if(httpcmd.equals(CMDSET_RESTART_WIFI)){
+                    if (result != null){
+                        Log.d(TAG,"Wi-Fi restarted");
+                    }else {
+                        Log.d(TAG,"Wi-Fi restart fail");
                     }
                 }
 

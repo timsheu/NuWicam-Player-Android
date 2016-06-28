@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.PreferenceFragment;
 import android.support.v4.app.Fragment;
 import android.preference.Preference;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,9 @@ import com.longevitysoft.android.xml.plist.domain.sString;
 import com.nuvoton.socketmanager.ReadConfigure;
 import com.nuvoton.socketmanager.SocketInterface;
 import com.nuvoton.socketmanager.SocketManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -93,200 +98,109 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     private void determineSettings(String key, SharedPreferences sharedPreference){
         socketManager = new SocketManager();
         socketManager.setSocketInterface(this);
-        boolean callSend = true, plugin = false;
         String command = getDeviceURL();
-        sString baseCommand, subCommand;
-        String pipe="&pipe=0", type="&type=h264", value, commandType = "";
-        ArrayList<String> commandList = new ArrayList<>();
-        String pluginCommand = "param.cgi?action=update&group=plugin";
-        String finalCommand = "";
-        String index = "0";
+        sString baseCommand;
+        String value, commandType = "";
         switch (key){
             case "Resolution":
                 ArrayList<Map> videoCommandSet = configure.videoCommandSet;
                 Map<String, PListObject> targetCommand = videoCommandSet.get(1);
                 baseCommand = (sString) targetCommand.get("Base Command");
-                subCommand = (sString) targetCommand.get("Sub Command");
                 value = sharedPreference.getString(key, "0");
-                command = command + baseCommand.getValue() + "?command=" + subCommand.getValue() + pipe + type + "&value=" + value;
-                commandType = SocketManager.CMDSET_RESOLUTION;
-                break;
-            case "Adaptive":
-                index = sharedPreference.getString("Adaptive", "0");
-                commandList = new ArrayList<>();
-
-                String adaptiveTemp = "Pipe0_Quality";
-                finalCommand = command + pluginCommand + "&name=h264_encoder" + "&param=" + adaptiveTemp + "&value=0";
-                commandList.add(finalCommand);
-
-                adaptiveTemp = "Pipe0_Min_Quality";
-                finalCommand = command + pluginCommand + "&name=h264_encoder" + "&param=" + adaptiveTemp + "&value=20";
-                commandList.add(finalCommand);
-
-                adaptiveTemp = "Pipe0_Max_Quality";
-                finalCommand = command + pluginCommand + "&name=h264_encoder" + "&param=" + adaptiveTemp + "&value=52";
-                commandList.add(finalCommand);
-
-                if (index.equals("0")){
-                    adaptiveTemp = "Pipe0_Min_Bitrate";
-                    finalCommand = command + pluginCommand + "&name=h264_encoder" + "&param=" + adaptiveTemp + "&value=512";
-                    commandList.add(finalCommand);
-
-                    adaptiveTemp = "Pipe0_Max_Bitrate";
-                    finalCommand = command + pluginCommand + "&name=h264_encoder" + "&param=" + adaptiveTemp + "&value=2000";
-                    commandList.add(finalCommand);
-                }else if (index.equals("1")){
-                    adaptiveTemp = "Pipe0_Min_Bitrate";
-                    finalCommand = command + pluginCommand + "&name=h264_encoder" + "&param=" + adaptiveTemp + "&value=512";
-                    commandList.add(finalCommand);
-
-                    adaptiveTemp = "Pipe0_Max_Bitrate";
-                    finalCommand = command + pluginCommand + "&name=h264_encoder" + "&param=" + adaptiveTemp + "&value=5000";
-                    commandList.add(finalCommand);
-                }else{
-                    adaptiveTemp = "Pipe0_Min_Bitrate";
-                    finalCommand = command + pluginCommand + "&name=h264_encoder" + "&param=" + adaptiveTemp + "&value=2000";
-                    commandList.add(finalCommand);
-
-                    adaptiveTemp = "Pipe0_Max_Bitrate";
-                    finalCommand = command + pluginCommand + "&name=h264_encoder" + "&param=" + adaptiveTemp + "&value=5000";
-                    commandList.add(finalCommand);
+                if (value.equals("0")){ // QVGA
+                    command = command + baseCommand.getValue() + "&VINWIDTH=320&JPEGENCWIDTH=320&VINHEIGHT=240&JPEGENCHEIGHT=240";
+                }else{ // VGA
+                    command = command + baseCommand.getValue() + "&VINWIDTH=640&JPEGENCWIDTH=640&VINHEIGHT=480&JPEGENCHEIGHT=480";
                 }
-                plugin = true;
-                socketManager.setCommandList(commandList);
-                commandType = SocketManager.CMDSET_ADAPTIVE;
-                sharedPreference.edit().putString("Fixed Quality", "4");
-                sharedPreference.edit().putString("Fixed Bit Rate", "4");
+                commandType = SocketManager.CMDSET_UPDATE_VIDEO;
                 break;
-            case "Fixed Bit Rate":
-                index = sharedPreference.getString("Fixed Bit Rate", "0");
-                commandList = new ArrayList<>();
-
-                String fixedBitRateTemp = "Pipe0_Quality";
-                finalCommand = command + pluginCommand + "&name=h264_encoder" + "&param=" + fixedBitRateTemp + "&value=0";
-                commandList.add(finalCommand);
-
-                fixedBitRateTemp = "Pipe0_Min_Quality";
-                finalCommand = command + pluginCommand + "&name=h264_encoder" + "&param=" + fixedBitRateTemp + "&value=1";
-                commandList.add(finalCommand);
-
-                fixedBitRateTemp = "Pipe0_Max_Quality";
-                finalCommand = command + pluginCommand + "&name=h264_encoder" + "&param=" + fixedBitRateTemp + "&value=52";
-                commandList.add(finalCommand);
-
-                fixedBitRateTemp = "Pipe0_Max_Bitrate";
-                finalCommand = command + pluginCommand + "&name=h264_encoder" + "&param=" + fixedBitRateTemp + "&value=0";
-                commandList.add(finalCommand);
-
-                fixedBitRateTemp = "Pipe0_Bitrate";
-
-                if (index.equals("0")){
-                    finalCommand = command + pluginCommand + "&name=h264_encoder" + "&param=" + fixedBitRateTemp + "&value=2000";
-                }else if (index.equals("1")){
-                    finalCommand = command + pluginCommand + "&name=h264_encoder" + "&param=" + fixedBitRateTemp + "&value=3000";
-                }else {
-                    finalCommand = command + pluginCommand + "&name=h264_encoder" + "&param=" + fixedBitRateTemp + "&value=5000";
-                }
-                plugin = true;
-                commandList.add(finalCommand);
-                socketManager.setCommandList(commandList);
-                commandType = SocketManager.CMDSET_FIXED_BITRATE;
-                sharedPreference.edit().putString("Adaptive", "4");
-                sharedPreference.edit().putString("Fixed Quality", "4");
-
-                break;
-            case "Fixed Quality":
-                index = sharedPreference.getString("Fixed Bit Rate", "0");
-                commandList = new ArrayList<>();
-
-                String fixedQualityTemp = "Pipe0_Min_Bitrate";
-                finalCommand = command + pluginCommand + "&name=h264_encoder" + "&param=" + fixedQualityTemp + "&value=512";
-                commandList.add(finalCommand);
-
-                fixedQualityTemp = "Pipe0_Max_Bitrate";
-                finalCommand = command + pluginCommand + "&name=h264_encoder" + "&param=" + fixedQualityTemp + "&value=4096";
-                commandList.add(finalCommand);
-
-                fixedQualityTemp = "Pipe0_Quality";
-
-                if (index.equals("0")){
-                    finalCommand = command + pluginCommand + "&name=h264_encoder" + "&param=" + fixedQualityTemp + "&value=50";
-                }else if (index.equals("1")){
-                    finalCommand = command + pluginCommand + "&name=h264_encoder" + "&param=" + fixedQualityTemp + "&value=40";
-                }else {
-                    finalCommand = command + pluginCommand + "&name=h264_encoder" + "&param=" + fixedQualityTemp + "&value=25";
-                }
-                plugin = true;
-                commandList.add(finalCommand);
-                socketManager.setCommandList(commandList);
-                commandType = SocketManager.CMDSET_FIXED_QUALITY;
-                sharedPreference.edit().putString("Adaptive", "4");
-                sharedPreference.edit().putString("Fixed Bit Rate", "4");
-                break;
-            case "FPS":
+            case "Bit Rate":
                 videoCommandSet = configure.videoCommandSet;
-                targetCommand = videoCommandSet.get(7);
+                targetCommand = videoCommandSet.get(1);
                 baseCommand = (sString) targetCommand.get("Base Command");
-                subCommand = (sString) targetCommand.get("Sub Command");
-                value = sharedPreference.getString(key, "30");
-                command = command + baseCommand.getValue() + "?command=" + subCommand.getValue() + pipe + type + "&value=" + value;
-                commandType = SocketManager.CMDSET_FPS;
+                value = sharedPreference.getString(key, "1024");
+                command = command + baseCommand.getValue() + "&BITRATE=" + value;
+                commandType = SocketManager.CMDSET_UPDATE_VIDEO;
                 break;
-            case "Device Mic":
-                videoCommandSet = configure.audioCommandSet;
-                targetCommand = videoCommandSet.get(0);
+            case "SSID":
+                String option = sharedPreference.getString(key, "NuWicam");
+                videoCommandSet = configure.configCommandSet;
+                targetCommand = videoCommandSet.get(1);
                 baseCommand = (sString) targetCommand.get("Base Command");
-                subCommand = (sString) targetCommand.get("Sub Command");
-                boolean mute = sharedPreference.getBoolean("key", false);
-                value = (mute == true) ? "1" : "0";
-                command = command + baseCommand.getValue() + "?command=" + subCommand.getValue() + pipe + type + "&value=" + value;
-                commandType = SocketManager.CMDSET_MUTE;
-
+                command = command + baseCommand.getValue() + "&AP_SSID=" + option;
+                commandType = SocketManager.CMDSET_UPDATE_WIFI;
                 break;
-            case "Transmission":
-                callSend = false;
+            case "Password":
+                option = sharedPreference.getString(key, "12345678");
+                videoCommandSet = configure.configCommandSet;
+                targetCommand = videoCommandSet.get(1);
+                baseCommand = (sString) targetCommand.get("Base Command");
+                command = command + baseCommand.getValue() + "&AP_AUTH_KEY=" + option;
+                commandType = SocketManager.CMDSET_UPDATE_WIFI;
+                ListPreference listPreference = (ListPreference) getPreferenceManager().findPreference("Show Password");
+                listPreference.setValue("1");
+                Log.d(TAG, "determineSettings: password");
                 break;
-            case "Reboot":
-                String reboot = sharedPreference.getString(key, "1");
-                if (reboot.equals("0")){
+            case "Restart Stream":
+                option = sharedPreference.getString(key, "1");
+                if (option.equals("0")){
                     videoCommandSet = configure.systemCommandSet;
-                    targetCommand = videoCommandSet.get(0);
+                    targetCommand = videoCommandSet.get(2);
                     baseCommand = (sString) targetCommand.get("Base Command");
                     command = command + baseCommand.getValue();
-                    commandType = SocketManager.CMDSET_REBOOT;
                 }
-                sharedPreference.edit().putString(key, "1");
-                break;
-//            case "Reset Data":
-//                callSend = false;
-//                String reset = sharedPreference.getString(key, "1");
-//                if (reset.equals("0")){
-//                    configure.initSharedPreference(Integer.valueOf(cameraSerial), true);
-//                    sharedPreference.edit().putString(key, "0");
-//                }
-//                break;
-            case "Recorder Status":
-                ArrayList<Map> recordCommandSet = configure.recordCommandSet;
-                String recorderStatus = sharedPreference.getString(key, "0");
-                if (recorderStatus.equals("0")){
-                    targetCommand = recordCommandSet.get(3);
+                commandType = SocketManager.CMDSET_RESTART_STREAM;
+
+                Log.d(TAG, "determineSettings: " + command);
+                if (socketManager != null){
+                    socketManager.executeSendGetTask(command, commandType);
+                }
+                sharedPreference.edit().apply();
+
+                option = "1";
+                sharedPreference.edit().putString(key, option);
+                listPreference = (ListPreference) getPreferenceManager().findPreference(key);
+                listPreference.setValue(option);
+
+                return;
+            case "Restart Wi-Fi":
+                option = sharedPreference.getString(key, "1");
+                if (option.equals("0")){
+                    videoCommandSet = configure.systemCommandSet;
+                    targetCommand = videoCommandSet.get(1);
+                    baseCommand = (sString) targetCommand.get("Base Command");
+                    command = command + baseCommand.getValue();
+
+                }
+                commandType = SocketManager.CMDSET_RESTART_WIFI;
+                Log.d(TAG, "determineSettings: " + command);
+                if (socketManager != null){
+                    socketManager.executeSendGetTask(command, commandType);
+                }
+                sharedPreference.edit().apply();
+                option = "1";
+                sharedPreference.edit().putString(key, option);
+                listPreference = (ListPreference) getPreferenceManager().findPreference(key);
+                listPreference.setValue(option);
+                return;
+            case "Show Password":
+                option = sharedPreference.getString(key, "1");
+                if (option.equals("0")){
+                    EditTextPreference pref = (EditTextPreference) getPreferenceManager().findPreference("Password");
+                    pref.getEditText().setInputType(InputType.TYPE_TEXT_VARIATION_NORMAL | InputType.TYPE_CLASS_TEXT);
                 }else {
-                    targetCommand = recordCommandSet.get(2);
+                    EditTextPreference pref = (EditTextPreference) getPreferenceManager().findPreference("Password");
+                    pref.getEditText().setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);
                 }
-                baseCommand = (sString) targetCommand.get("Base Command");
-                subCommand = (sString) targetCommand.get("Sub Command");
-                value = sharedPreference.getString(key, "30");
-                command = command + baseCommand.getValue() + "?command=" + subCommand.getValue() + pipe + type + "&value=" + value;
-                commandType = SocketManager.CMDSET_RECORD;
-                break;
+                listPreference = (ListPreference) getPreferenceManager().findPreference(key);
+                listPreference.setValue(option);
+                return;
         }
         Log.d(TAG, "determineSettings: " + command);
-        if (socketManager != null && callSend == true && plugin == false){
+        if (socketManager != null){
             socketManager.executeSendGetTask(command, commandType);
-        }else if (socketManager != null && callSend == true && plugin == true){
-            socketManager.executeSendGetTaskList(commandList, commandType);
         }
-        sharedPreference.edit().commit();
+        sharedPreference.edit().apply();
     }
 
     private String getDeviceURL(){
@@ -295,7 +209,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         String urlString = preference.getString("URL", "DEFAULT");
         String [] ipCut = urlString.split("/");
         String ip = ipCut[2];
-        String url = "http://" + ip + ":80/";
+        String url = "http://" + ip + ":80/cgi-bin/";
         return url;
     }
 
@@ -321,13 +235,13 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         SharedPreferences preference = getActivity().getApplicationContext().getSharedPreferences(cameraName, Context.MODE_PRIVATE);
         preference.edit().putString(category, value);
         preference.edit().commit();
-        if (category.equals("Recorder Status")){
-            Preference pref = (Preference)getPreferenceManager().findPreference(category);
+        if (category.equals("List Wi-Fi Setting")){
+            EditTextPreference pref = (EditTextPreference)getPreferenceManager().findPreference(category);
             if (value.equals("1"))
                 pref.setSummary("Recorder is recording");
             else
                 pref.setSummary("Recorder is stopped");
-        }else if(category.equals("Available Storage")){
+        }else if(category.equals("List Video Setting")){
             Preference pref = (Preference)getPreferenceManager().findPreference(category);
             if (value.equals("1"))
                 pref.setSummary("Storage available on device.");
@@ -339,47 +253,94 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         }
     }
 
+    @Override
+    public void updateSettingContent(String category, JSONObject map) {
+        String cameraName = "Setup Camera " + cameraSerial;
+        SharedPreferences preference = getActivity().getApplicationContext().getSharedPreferences(cameraName, Context.MODE_PRIVATE);
+        if (category.equals("List Wi-Fi Setting")){
+            EditTextPreference pref = (EditTextPreference)getPreferenceManager().findPreference("SSID");
+            String ssid = null;
+            try {
+                ssid = map.getString("AP_SSID");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            String password = null;
+            try {
+                password = map.getString("AP_AUTH_KEY");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            pref.setText(ssid);
+            pref = (EditTextPreference)getPreferenceManager().findPreference("Password");
+            pref.setText(password);
+            preference.edit().putString("SSID", ssid);
+            preference.edit().putString("Password", password);
+            preference.edit().apply();
+        }else if(category.equals("List Video Setting")){
+            try{
+                String value = map.getString("value");
+                if (value.equals("0")){
+                    return;
+                }
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+            String resolution = null;
+            try {
+                resolution = map.getString("VINWIDTH");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            String BitRate = null;
+            try {
+                BitRate = map.getString("BITRATE");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            int bitRateValue = Integer.valueOf(BitRate);
+            if (resolution.equals("320")){
+                resolution = "0"; // QVGA
+            }else {
+                resolution = "1"; //  VGA
+            }
+            BitRate = String.valueOf(bitRateValue);
+            preference.edit().putString("Resolution", resolution);
+            preference.edit().putString("Bit Rate", BitRate);
+            preference.edit().apply();
+
+            ListPreference pref = (ListPreference)getPreferenceManager().findPreference("Resolution");
+            pref.setValue(resolution);
+
+            pref = (ListPreference)getPreferenceManager().findPreference("Bit Rate");
+            pref.setValue(BitRate);
+        }else {
+        }
+    }
+
     private void updateSetting(){
         socketManager = new SocketManager();
         socketManager.setSocketInterface(this);
-        boolean callSend = true, plugin = false;
-        sString baseCommand, subCommand;
-        String pipe="&pipe=0", type="&type=h264", commandType = "";
+        sString baseCommand;
+        String commandType = "";
         ArrayList<String> commandList = new ArrayList<>();
         String command = getDeviceURL();
-// get resolution
+
+// list video parameter
         ArrayList<Map> videoCommandSet = configure.videoCommandSet;
-        Map<String, PListObject> targetCommand = videoCommandSet.get(2);
+        Map<String, PListObject> targetCommand = videoCommandSet.get(0);
         baseCommand = (sString) targetCommand.get("Base Command");
-        subCommand = (sString) targetCommand.get("Sub Command");
-        command = command + baseCommand.getValue() + "?command=" + subCommand.getValue() + pipe + type;
+        command = command + baseCommand.getValue();
         commandList.add(command);
-// get fps
-        command = getDeviceURL();
 
-        targetCommand = videoCommandSet.get(8);
-        baseCommand = (sString) targetCommand.get("Base Command");
-        subCommand = (sString) targetCommand.get("Sub Command");
-        command = command + baseCommand.getValue() + "?command=" + subCommand.getValue() + pipe + type;
-        commandList.add(command);
-// get available storage
+// list wifi parameter
         command = getDeviceURL();
-
-        ArrayList<Map> infoCommandSet = configure.infoCommandSet;
-        targetCommand = infoCommandSet.get(0);
+        ArrayList<Map> configCommandSet = configure.configCommandSet;
+        targetCommand = configCommandSet.get(0);
         baseCommand = (sString) targetCommand.get("Base Command");
-        subCommand = (sString) targetCommand.get("Sub Command");
-        command = command + baseCommand.getValue() + "?command=" + subCommand.getValue() + pipe + type;
+        command = command + baseCommand.getValue();
         commandList.add(command);
-// get recorder status
-        command = getDeviceURL();
 
-        ArrayList<Map> recordCommandSet = configure.recordCommandSet;
-        targetCommand = recordCommandSet.get(1);
-        baseCommand = (sString) targetCommand.get("Base Command");
-        subCommand = (sString) targetCommand.get("Sub Command");
-        command = command + baseCommand.getValue() + "?command=" + subCommand.getValue() + pipe + type;
-        commandList.add(command);
 
         commandType = SocketManager.CMDGET_ALL;
         socketManager.setCommandList(commandList);

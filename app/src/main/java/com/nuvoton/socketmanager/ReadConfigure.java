@@ -27,18 +27,11 @@ public class ReadConfigure {
     private static final String TAG = "ReadConfigure";
     private static ReadConfigure readConfigure = new ReadConfigure();
 
-    private static final String audioCommand     = "AudioCommandPropertyList.plist";
     private static final String configCommand    = "ConfigCommandPropertyList.plist";
-    private static final String fileCommand      = "FileCommandPropertyList.plist";
-    private static final String infoCommand      = "InformationCommandPropertyList.plist";
-    private static final String multicastCommand = "MulticastCommandPropertyList.plist";
-    private static final String recordCommand    = "RecordCommandPropertyList.plist";
     private static final String systemCommand    = "SystemCommandPropertyList.plist";
     private static final String videoCommand     = "VideoCommandPropertyList.plist";
 
-    public static ArrayList<Map> audioCommandSet, configCommandSet, fileCommandSet,
-                                infoCommandSet, multicastCommandSet, recordCommandSet,
-                                systemCommandSet, videoCommandSet;
+    public static ArrayList<Map> configCommandSet, systemCommandSet, videoCommandSet;
 
     private ReadConfigure(){
         Log.d(TAG, "ReadConfigure: create");
@@ -56,28 +49,8 @@ public class ReadConfigure {
             @Override
             public void run() {
                 try {
-                    InputStream inputStream = contextLocal.getAssets().open(audioCommand);
-                    audioCommandSet = parsePropertyList(inputStream);
-                    if (inputStream != null) { inputStream.close(); }
-
-                    inputStream = contextLocal.getAssets().open(configCommand);
+                    InputStream inputStream = contextLocal.getAssets().open(configCommand);
                     configCommandSet = parsePropertyList(inputStream);
-                    if (inputStream != null) { inputStream.close(); }
-
-                    inputStream = contextLocal.getAssets().open(fileCommand);
-                    fileCommandSet = parsePropertyList(inputStream);
-                    if (inputStream != null) { inputStream.close(); }
-
-                    inputStream = contextLocal.getAssets().open(infoCommand);
-                    infoCommandSet = parsePropertyList(inputStream);
-                    if (inputStream != null) { inputStream.close(); }
-
-                    inputStream = contextLocal.getAssets().open(multicastCommand);
-                    multicastCommandSet = parsePropertyList(inputStream);
-                    if (inputStream != null) { inputStream.close(); }
-
-                    inputStream = contextLocal.getAssets().open(recordCommand);
-                    recordCommandSet = parsePropertyList(inputStream);
                     if (inputStream != null) { inputStream.close(); }
 
                     inputStream = contextLocal.getAssets().open(systemCommand);
@@ -95,16 +68,6 @@ public class ReadConfigure {
         }).run();
 
         return readConfigure;
-    }
-
-    public void importCommandSets(boolean clear) {
-        Log.d(TAG, "ExamineLocalFile: " );
-        try{
-            InputStream inputStream = contextLocal.getAssets().open(audioCommand);
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-
     }
 
     private void copyFile(InputStream inputStream, File dest) throws IOException{
@@ -176,11 +139,12 @@ public class ReadConfigure {
         editor.putString("Serial", String.valueOf(cameraSerial));
         editor.putString("Resolution", "0");
         editor.putString("Encode Quality", "0");
-        editor.putString("Bit Rate", "6000");
+        editor.putString("Bit Rate", "4096");
         editor.putString("FPS", "30");
         editor.putBoolean("Device Mic", true);
-        editor.putString("SSID", "SkyEye");
+        editor.putString("SSID", "NuWicam");
         editor.putString("Password", "12345678");
+        editor.putString("Show Password", "1");
         Set<String> set = new LinkedHashSet<String>();
         if (cameraSerial == 0 || cameraSerial == 1){ // DVR and local IP
             editor.putString("Name", "LOCAL-IP");
