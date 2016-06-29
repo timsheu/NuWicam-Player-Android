@@ -14,5 +14,6 @@
 
     <string name="online">ONLINE</string>
     <string name="offline">OFFLINE</string>
+    <string name="temperature">N/A \u2103</string>
 
 </resources>

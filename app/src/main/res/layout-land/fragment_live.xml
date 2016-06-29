@@ -16,6 +16,96 @@
         app:layout_aspectRatio="133%"
         app:layout_widthPercent="100%"
         />
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentStart="true"
+    android:layout_marginTop="15dp"
+    android:layout_marginLeft="5dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/temperature"
+        android:textColor="#FFFFFF"
+        android:id="@+id/temperature"
+        android:layout_centerVertical="true"
+        />
+
+    <ImageButton
+        android:id="@+id/red1"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/recordflashoff"
+        android:background="#00000000"
+        android:layout_toEndOf="@+id/temperature"
+        android:layout_marginLeft="8dp"
+        android:tag="10"
+        android:scaleType="fitCenter"
+        android:layout_centerVertical="true"/>
+
+    <ImageButton
+        android:id="@+id/red2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/recordflashoff"
+        android:background="#00000000"
+        android:layout_toEndOf="@+id/red1"
+        android:layout_marginLeft="8dp"
+        android:tag="11"
+        android:scaleType="fitCenter"
+        android:layout_centerVertical="true"/>
+
+    <ImageButton
+        android:id="@+id/green1"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/lightoff"
+        android:background="#00000000"
+        android:layout_toEndOf="@+id/red2"
+        android:layout_marginLeft="8dp"
+        android:tag="12"
+        android:scaleType="fitCenter"
+        android:layout_centerVertical="true"/>
+
+    <ImageButton
+        android:id="@+id/green2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/lightoff"
+        android:background="#00000000"
+        android:layout_toEndOf="@+id/green1"
+        android:layout_marginLeft="8dp"
+        android:tag="13"
+        android:scaleType="fitCenter"
+        android:layout_centerVertical="true"/>
+
+    <ImageButton
+        android:id="@+id/blue1"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/lightblueoff"
+        android:background="#00000000"
+        android:layout_toEndOf="@+id/green2"
+        android:layout_marginLeft="8dp"
+        android:tag="14"
+        android:scaleType="fitCenter"
+        android:layout_centerVertical="true"/>
+
+    <ImageButton
+        android:id="@+id/blue2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/lightblueoff"
+        android:background="#00000000"
+        android:layout_toEndOf="@+id/blue1"
+        android:layout_marginLeft="8dp"
+        android:tag="15"
+        android:scaleType="fitCenter"
+        android:layout_centerVertical="true"/>
+</RelativeLayout>
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
