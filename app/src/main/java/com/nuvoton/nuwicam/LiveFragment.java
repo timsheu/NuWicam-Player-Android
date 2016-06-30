@@ -56,11 +56,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class LiveFragment extends Fragment implements OnClickListener, OnSeekBarChangeListener, FFmpegListener, SocketInterface{
+    private boolean isModbusInPolling = true;
+    final Lock lock = new ReentrantLock();
+    final Condition readOpen = lock.newCondition(), writeOpen = lock.newCondition();
     private WriteSingleRegisterRequest wreq;
     private WriteSingleRegisterResponse wres;
     private ArrayList<ImageButton> lightButtonList = new ArrayList<>();
@@ -68,8 +74,8 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
     private int [] lightArray = new int[6];
     private ReadMultipleRegistersResponse res;
     private ReadMultipleRegistersRequest req;
-    private RTUTCPMasterConnection con = null;
-    private ModbusRTUTCPTransaction trans1 = null, trans2 = null;
+    private RTUTCPMasterConnection con1 = null;
+    private ModbusRTUTCPTransaction trans1 = null;
     private InetAddress addr = null;
     int port = Modbus.DEFAULT_PORT;
     private String modbusURL;
@@ -119,9 +125,6 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
                 break;
             case R.id.expandButton:
                 Log.d(TAG, "onClick: expand");
-                break;
-            case 10:
-                Log.d(TAG, "onClick: 10");
                 break;
             default:
                 break;
@@ -181,6 +184,15 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
             button.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    repeatModbus(false);
+                    lock.lock();
+                    while (isModbusInPolling){
+                        try {
+                            writeOpen.await();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
                     int lightValue = lightArray[lightIndex], lightFinalValue = 0;
                     lightValue = (lightValue == 0) ? 1 : 0;
                     lightArray[lightIndex] = lightValue;
@@ -207,7 +219,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
                             button.setImageResource(R.drawable.lightblueoff);
                         }
                     }
-                    setLightValue(light);
+                    new SetLightValueTask().execute("");
                 }
             });
             lightButtonList.add(button);
@@ -561,25 +573,33 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
             } catch (UnknownHostException e) {
                 e.printStackTrace();
             }
-            if (con == null){
-                con = new RTUTCPMasterConnection(addr, Modbus.DEFAULT_PORT);
+            if (con1 == null){
+                con1 = new RTUTCPMasterConnection(addr, Modbus.DEFAULT_PORT);
                 try {
-                    con.connect();
+                    con1.connect();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
 
-            if (con.isConnected()){
+            if (con1.isConnected()){
+                lock.lock();
+                while (!isModbusInPolling){
+                    try {
+                        readOpen.await();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
                 Log.d(TAG, "doInBackground: modbus connected");
                 req = new ReadMultipleRegistersRequest(ref, count);
                 req.setUnitID(1);
-                trans1 = new ModbusRTUTCPTransaction(con);
+                trans1 = new ModbusRTUTCPTransaction(con1);
                 trans1.setRequest(req);
                 try {
                     trans1.execute();
                     try {
-                        Thread.sleep(50);
+                        Thread.sleep(100);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -592,9 +612,17 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
                                 setModbusUI(registers);
                             }
                         });
+                        isModbusInPolling = false;
+                        writeOpen.signal();
+                        lock.unlock();
                         Log.d(TAG, "modbus doInBackground: " + String.valueOf(registers[1].getValue()) + "temp: " + String.valueOf(registers[4].getValue()));
                     }else {
-                        temperatureText.setText("N/A \u2109");
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                temperatureText.setText("N/A \u2103");
+                            }
+                        });
                         Log.d(TAG, "modbus doInBackground: null res");
                     }
 
@@ -609,9 +637,10 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
         new TaskModbus().execute("");
         if (option){
             modbusTimer = new Timer();
-            modbusTimer.schedule(new TimerPollingModbus(), 0, 1050);
+            modbusTimer.schedule(new TimerPollingModbus(), 0, 1100);
         }else {
             modbusTimer.cancel();
+            con1.close();
         }
 
     }
@@ -658,52 +687,60 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
             }
         }
         temperature = registers[4].getValue();
-        temperatureText.setText(String.valueOf(temperature) + " \u2109");
+        temperatureText.setText(String.valueOf(temperature) + " \u2103");
     }
+    private class SetLightValueTask extends AsyncTask<String, Void, Void>{
 
-    private void setLightValue(int light) {
-        int ref = 4;
-        try {
-            addr = InetAddress.getByName("192.168.100.1");
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-
-        if (con == null) {
-            con = new RTUTCPMasterConnection(addr, Modbus.DEFAULT_PORT);
-            try {
-                con.connect();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        if (con.isConnected()) {
-            Register register = new SimpleRegister(light);
-            wreq = new WriteSingleRegisterRequest(ref, register);
-            wreq.setUnitID(1);
-            Log.d(TAG, "doInBackground: modbus connected");
-            trans2 = new ModbusRTUTCPTransaction(con);
-            trans2.setRequest(wreq);
-            try {
-                trans2.execute();
+        @Override
+        protected Void doInBackground(String... params) {
+                int ref = 4;
                 try {
-                    Thread.sleep(50);
-                } catch (InterruptedException e) {
+                    addr = InetAddress.getByName("192.168.100.1");
+                } catch (UnknownHostException e) {
                     e.printStackTrace();
                 }
-                wres = (WriteSingleRegisterResponse) trans2.getResponse();
-                if (wres != null) {
-                    Log.d(TAG, "modbus doInBackground: " + wres);
-                } else {
-                    temperatureText.setText("N/A \u2109");
-                    Log.d(TAG, "modbus doInBackground: null res");
+
+                if (con1 == null || !con1.isConnected()) {
+                    con1 = new RTUTCPMasterConnection(addr, Modbus.DEFAULT_PORT);
+                    try {
+                        con1.connect();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
 
-            } catch (ModbusException e) {
-                e.printStackTrace();
-            }
+                if (con1.isConnected()) {
+                    Register register = new SimpleRegister(light);
+                    wreq = new WriteSingleRegisterRequest(ref, register);
+                    wreq.setUnitID(1);
+                    Log.d(TAG, "doInBackground: modbus connected");
+                    trans1 = new ModbusRTUTCPTransaction(con1);
+                    trans1.setRequest(wreq);
+                    try {
+                        trans1.execute();
+                        Thread.sleep(100);
+                        wres = new WriteSingleRegisterResponse();
+                        Log.d(TAG, "doInBackground: " + wres);
+                        if (wres != null){
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    isModbusInPolling = true;
+                                    readOpen.signal();
+                                    lock.unlock();
+                                }
+                            });
+                            repeatModbus(true);
+                        }
+                    } catch (ModbusException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            return null;
         }
     }
+
 }
 

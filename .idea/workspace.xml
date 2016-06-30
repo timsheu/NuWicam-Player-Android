@@ -10,93 +10,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e67d0ecf-e275-42b4-9f7b-4522fa0b9a21" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ReadDeviceIdentificationRequest.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ReadDeviceIdentificationResponse.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/wrapper/ModbusTCPClient.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/cache.properties.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/fileHashes.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/fileSnapshots.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/outputFileStates.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/outputFileStates.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/taskArtifacts.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugAndroidTestJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugAndroidTestJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugAndroidTestJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugAndroidTestJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugAndroidTestJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugAndroidTestJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugUnitTestJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugUnitTestJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugUnitTestJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugUnitTestJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugUnitTestJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugUnitTestJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/generated/mockable-android-23.jar" afterPath="$PROJECT_DIR$/build/generated/mockable-android-23.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nuvoton/nuwicam/LiveFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nuvoton/nuwicam/LiveFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nuvoton/socketmanager/SocketManager.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nuvoton/socketmanager/SocketManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/Modbus.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/Modbus.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/ModbusCoupler.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/ModbusCoupler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/ModbusException.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/ModbusException.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/ModbusIOException.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/ModbusIOException.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/ModbusSlaveException.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/ModbusSlaveException.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/BytesInputStream.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/BytesInputStream.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/BytesOutputStream.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/BytesOutputStream.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/ModbusTCPTransaction.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/ModbusTCPTransaction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/ModbusTCPTransport.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/ModbusTCPTransport.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/ModbusTransaction.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/ModbusTransaction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/ModbusTransport.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/ModbusTransport.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/NonWordDataHandler.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/NonWordDataHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/Transportable.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/Transportable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/package.html" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/package.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ExceptionResponse.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ExceptionResponse.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/IllegalFunctionRequest.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/IllegalFunctionRequest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ModbusMessage.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ModbusMessage.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/ModbusRTUTCPTransport.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/ModbusRTUTCPTransport.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ModbusMessageImpl.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ModbusMessageImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ModbusRequest.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ModbusRequest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ModbusResponse.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ModbusResponse.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ReadCoilsRequest.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ReadCoilsRequest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ReadCoilsResponse.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ReadCoilsResponse.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ReadInputDiscretesRequest.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ReadInputDiscretesRequest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ReadInputDiscretesResponse.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ReadInputDiscretesResponse.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ReadInputRegistersRequest.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ReadInputRegistersRequest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ReadInputRegistersResponse.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ReadInputRegistersResponse.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ReadMultipleRegistersRequest.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ReadMultipleRegistersRequest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ReadMultipleRegistersResponse.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ReadMultipleRegistersResponse.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/WriteCoilRequest.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/WriteCoilRequest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/WriteCoilResponse.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/WriteCoilResponse.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/WriteMultipleCoilsRequest.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/WriteMultipleCoilsRequest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/WriteMultipleCoilsResponse.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/WriteMultipleCoilsResponse.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/WriteMultipleRegistersRequest.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/WriteMultipleRegistersRequest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/WriteMultipleRegistersResponse.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/WriteMultipleRegistersResponse.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/WriteSingleRegisterRequest.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/WriteSingleRegisterRequest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/WriteSingleRegisterResponse.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/WriteSingleRegisterResponse.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/net/TCPMasterConnection.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/net/TCPMasterConnection.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/net/package.html" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/net/package.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/AbstractRegister.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/AbstractRegister.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/DefaultProcessImageFactory.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/DefaultProcessImageFactory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/DigitalIn.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/DigitalIn.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/DigitalOut.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/DigitalOut.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/IllegalAddressException.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/IllegalAddressException.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/InputRegister.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/InputRegister.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/ObservableDigitalOut.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/ObservableDigitalOut.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/ObservableRegister.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/ObservableRegister.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/ProcessImage.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/ProcessImage.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/ProcessImageFactory.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/ProcessImageFactory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/ProcessImageImplementation.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/ProcessImageImplementation.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/Register.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/Register.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/SimpleDigitalIn.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/SimpleDigitalIn.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/SimpleDigitalOut.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/SimpleDigitalOut.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/SimpleProcessImage.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/SimpleProcessImage.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/SimpleRegister.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/SimpleRegister.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/SynchronizedAbstractRegister.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/SynchronizedAbstractRegister.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/package.html" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/procimg/package.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/util/BitVector.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/util/BitVector.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/util/LinkedNode.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/util/LinkedNode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/util/LinkedQueue.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/util/LinkedQueue.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/util/ModbusUtil.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/util/ModbusUtil.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/util/ThreadPool.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/util/ThreadPool.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/util/package.html" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/util/package.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout-land/fragment_live.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout-land/fragment_live.xml" />
     </list>
     <ignored path="NuWicam Player.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -127,19 +57,43 @@
       <file leaf-file-name="LiveFragment.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nuvoton/nuwicam/LiveFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33333334">
-              <caret line="209" column="0" selection-start-line="209" selection-start-column="0" selection-end-line="209" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.49825785">
+              <caret line="729" column="50" selection-start-line="729" selection-start-column="50" selection-end-line="729" selection-end-column="50" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#6335#7849#0" expanded="true" />
-                <element signature="e#7848#7849#0" expanded="true" />
-                <element signature="e#12092#12567#0" expanded="true" />
-                <element signature="e#12566#12567#0" expanded="true" />
-                <element signature="e#15881#15897#0" expanded="true" />
-                <element signature="e#17776#17791#0" expanded="true" />
-                <element signature="e#20610#20824#0" expanded="true" />
-                <element signature="e#20823#20824#0" expanded="true" />
+                <element signature="e#6542#8425#0" expanded="true" />
+                <element signature="e#8424#8425#0" expanded="true" />
+                <element signature="e#12668#13143#0" expanded="true" />
+                <element signature="e#13142#13143#0" expanded="true" />
+                <element signature="e#16457#16473#0" expanded="true" />
+                <element signature="e#18352#18367#0" expanded="true" />
+                <element signature="e#21473#21687#0" expanded="true" />
+                <element signature="e#21686#21687#0" expanded="true" />
+                <element signature="e#22062#22291#0" expanded="true" />
+                <element signature="e#22290#22291#0" expanded="true" />
+                <element signature="e#25800#26142#0" expanded="true" />
+                <element signature="e#26141#26142#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RTUTCPMasterConnection.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/net/RTUTCPMasterConnection.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="52" column="11" selection-start-line="52" selection-start-column="11" selection-end-line="52" selection-end-column="11" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WriteSingleRegisterResponse.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/WriteSingleRegisterResponse.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="31" column="19" selection-start-line="31" selection-start-column="19" selection-end-line="31" selection-end-column="19" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -147,9 +101,12 @@
       <file leaf-file-name="ModbusRTUTCPTransport.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/ModbusRTUTCPTransport.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="222" column="0" selection-start-line="222" selection-start-column="0" selection-end-line="222" selection-end-column="0" />
-              <folding />
+            <state vertical-scroll-proportion="-7.3333335">
+              <caret line="274" column="0" selection-start-line="274" selection-start-column="0" selection-end-line="274" selection-end-column="0" />
+              <folding>
+                <element signature="e#4967#5059#0" expanded="true" />
+                <element signature="e#5058#5059#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -158,7 +115,40 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/ModbusRTUTCPTransaction.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="198" column="0" selection-start-line="198" selection-start-column="0" selection-end-line="198" selection-end-column="0" />
+              <caret line="98" column="26" selection-start-line="98" selection-start-column="26" selection-end-line="98" selection-end-column="26" />
+              <folding>
+                <element signature="e#2481#2482#0" expanded="true" />
+                <element signature="e#2505#2506#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DataInputStream.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../AndroidSDK/sdk/sources/android-23/java/io/DataInputStream.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="61" column="31" selection-start-line="61" selection-start-column="31" selection-end-line="61" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ModbusMessageImpl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ModbusMessageImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="210" column="24" selection-start-line="210" selection-start-column="24" selection-end-line="210" selection-end-column="24" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DataInput.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../AndroidSDK/sdk/sources/android-23/java/io/DataInput.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="202" column="24" selection-start-line="202" selection-start-column="24" selection-end-line="202" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -170,42 +160,6 @@
             <state vertical-scroll-proportion="0.0">
               <caret line="64" column="9" selection-start-line="64" selection-start-column="9" selection-end-line="64" selection-end-column="9" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="fragment_live.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout-land/fragment_live.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.6666665">
-              <caret line="90" column="23" selection-start-line="90" selection-start-column="23" selection-end-line="90" selection-end-column="23" />
-              <folding />
-            </state>
-          </provider>
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="View.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../../AndroidSDK/sdk/sources/android-23/android/view/View.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="17021" column="0" selection-start-line="17021" selection-start-column="0" selection-end-line="17021" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ReadMultipleRegistersResponse.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ReadMultipleRegistersResponse.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="147" column="14" selection-start-line="147" selection-start-column="14" selection-end-line="147" selection-end-column="14" />
-              <folding>
-                <element signature="e#4180#4181#0" expanded="true" />
-                <element signature="e#4208#4209#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -1947,6 +1901,8 @@
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/ModbusRTUTCPTransaction.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout-land/fragment_live.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ModbusMessageImpl.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/ModbusRTUTCPTransport.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/nuvoton/nuwicam/LiveFragment.java" />
       </list>
     </option>
@@ -2395,8 +2351,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="2048" height="1125" extended-state="0" />
-    <editor active="true" />
+    <frame x="0" y="23" width="2048" height="1125" extended-state="6" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43310207" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -2404,7 +2360,7 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3567889" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37661052" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32903865" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -2478,32 +2434,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="65" />
+      <option name="time" value="75" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.aurelhubert/ahbottomnavigation/1.1.8/1afdae5d374460bb22b623cbc5e178d0fc2ad67f/ahbottomnavigation-1.1.8-sources.jar!/com/aurelhubert/ahbottomnavigation/AHBottomNavigationItem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="43" column="11" selection-start-line="43" selection-start-column="11" selection-end-line="43" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/preference_spinner.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/p_category_wifi_layout_dvr.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/p_category_wifi_layout.xml">
       <provider editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2578,6 +2513,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2630,6 +2566,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="33" column="33" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="33" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2695,6 +2632,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-3.5185184">
           <caret line="5" column="22" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2726,14 +2664,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/net/RTUTCPMasterConnection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35204083">
-          <caret line="52" column="11" selection-start-line="52" selection-start-column="11" selection-end-line="52" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ReadInputDiscretesRequest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.3768116">
@@ -2760,6 +2690,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.1632653">
           <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2767,14 +2698,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.19387755">
           <caret line="20" column="24" selection-start-line="20" selection-start-column="7" selection-end-line="20" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ModbusMessageImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.18357489">
-          <caret line="25" column="3" selection-start-line="25" selection-start-column="3" selection-end-line="25" selection-end-column="3" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2824,6 +2747,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/net/RTUTCPMasterConnection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="52" column="11" selection-start-line="52" selection-start-column="11" selection-end-line="52" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/WriteSingleRegisterResponse.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="19" selection-start-line="31" selection-start-column="19" selection-end-line="31" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/WriteSingleRegisterRequest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2832,36 +2771,70 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/ModbusRTUTCPTransport.java">
+    <entry file="file://$PROJECT_DIR$/../../../AndroidSDK/sdk/sources/android-23/java/io/DataInput.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="222" column="0" selection-start-line="222" selection-start-column="0" selection-end-line="222" selection-end-column="0" />
+          <caret line="202" column="24" selection-start-line="202" selection-start-column="24" selection-end-line="202" selection-end-column="24" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ModbusMessageImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="210" column="24" selection-start-line="210" selection-start-column="24" selection-end-line="210" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../AndroidSDK/sdk/sources/android-23/java/io/DataInputStream.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="61" column="31" selection-start-line="61" selection-start-column="31" selection-end-line="61" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/ModbusRTUTCPTransport.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.3333335">
+          <caret line="274" column="0" selection-start-line="274" selection-start-column="0" selection-end-line="274" selection-end-column="0" />
+          <folding>
+            <element signature="e#4967#5059#0" expanded="true" />
+            <element signature="e#5058#5059#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/ModbusRTUTCPTransaction.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="198" column="0" selection-start-line="198" selection-start-column="0" selection-end-line="198" selection-end-column="0" />
-          <folding />
+          <caret line="98" column="26" selection-start-line="98" selection-start-column="26" selection-end-line="98" selection-end-column="26" />
+          <folding>
+            <element signature="e#2481#2482#0" expanded="true" />
+            <element signature="e#2505#2506#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nuvoton/nuwicam/LiveFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="209" column="0" selection-start-line="209" selection-start-column="0" selection-end-line="209" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.49825785">
+          <caret line="729" column="50" selection-start-line="729" selection-start-column="50" selection-end-line="729" selection-end-column="50" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#6335#7849#0" expanded="true" />
-            <element signature="e#7848#7849#0" expanded="true" />
-            <element signature="e#12092#12567#0" expanded="true" />
-            <element signature="e#12566#12567#0" expanded="true" />
-            <element signature="e#15881#15897#0" expanded="true" />
-            <element signature="e#17776#17791#0" expanded="true" />
-            <element signature="e#20610#20824#0" expanded="true" />
-            <element signature="e#20823#20824#0" expanded="true" />
+            <element signature="e#6542#8425#0" expanded="true" />
+            <element signature="e#8424#8425#0" expanded="true" />
+            <element signature="e#12668#13143#0" expanded="true" />
+            <element signature="e#13142#13143#0" expanded="true" />
+            <element signature="e#16457#16473#0" expanded="true" />
+            <element signature="e#18352#18367#0" expanded="true" />
+            <element signature="e#21473#21687#0" expanded="true" />
+            <element signature="e#21686#21687#0" expanded="true" />
+            <element signature="e#22062#22291#0" expanded="true" />
+            <element signature="e#22290#22291#0" expanded="true" />
+            <element signature="e#25800#26142#0" expanded="true" />
+            <element signature="e#26141#26142#0" expanded="true" />
           </folding>
         </state>
       </provider>

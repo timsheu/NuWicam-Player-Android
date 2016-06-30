@@ -208,7 +208,7 @@ public abstract class ModbusMessageImpl
    * @param din the DataInput to read from.
    * @throws IOException if an I/O related error occurs.
    */
-  public abstract void readData(DataInput din)
+  public abstract void  readData(DataInput din)
       throws IOException;
 
   public int getOutputLength() {

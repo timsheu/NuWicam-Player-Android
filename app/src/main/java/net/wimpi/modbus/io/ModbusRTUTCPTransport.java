@@ -3,6 +3,8 @@
  */
 package net.wimpi.modbus.io;
 
+import android.util.Log;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -269,16 +271,25 @@ public class ModbusRTUTCPTransport implements ModbusTransport
 				int crc[] = ModbusUtil.calculateCRC(inBuffer, 0, packetLength - 2);
 				
 				// check the CRC against the received one...
+                int option = 0;
 				if (ModbusUtil.unsignedByteToInt(inBuffer[packetLength - 2]) != crc[0]
 						|| ModbusUtil.unsignedByteToInt(inBuffer[packetLength - 1]) != crc[1])
 				{
-					throw new IOException("CRC Error in received frame: " + packetLength + " bytes: "
+                    option = 1;
+					Log.d("Register", "readResponse: " + "CRC Error in received frame: " + packetLength + " bytes: "
 							+ ModbusUtil.toHex(inBuffer, 0, packetLength));
+//					throw new IOException("CRC Error in received frame: " + packetLength + " bytes: "
+//							+ ModbusUtil.toHex(inBuffer, 0, packetLength));
 				}
 				
 				// reset the input buffer to the given packet length (excluding
 				// the CRC)
-				this.inputBuffer.reset(inBuffer, packetLength - 2);
+                if (option == 0){
+                    this.inputBuffer.reset(inBuffer, packetLength - 2);
+                }else{
+                    this.inputBuffer.reset(inBuffer, packetLength);
+                }
+
 				
 				// create the response
 				response = ModbusResponse.createModbusResponse(functionCode);
