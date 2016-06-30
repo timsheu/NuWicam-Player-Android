@@ -66,7 +66,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class LiveFragment extends Fragment implements OnClickListener, OnSeekBarChangeListener, FFmpegListener, SocketInterface{
     private boolean isModbusInPolling = true;
     final Lock lock = new ReentrantLock();
-    final Condition readOpen = lock.newCondition(), writeOpen = lock.newCondition();
+    final Condition waitForWrite = lock.newCondition(), waitForRead = lock.newCondition();
     private WriteSingleRegisterRequest wreq;
     private WriteSingleRegisterResponse wres;
     private ArrayList<ImageButton> lightButtonList = new ArrayList<>();
@@ -188,7 +188,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
                     lock.lock();
                     while (isModbusInPolling){
                         try {
-                            writeOpen.await();
+                            waitForRead.await();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -566,6 +566,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
     private class TimerPollingModbus extends TimerTask{
         @Override
         public void run() {
+            isModbusInPolling = true;
             int ref = 3;
             int count = 5;
             try {
@@ -586,7 +587,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
                 lock.lock();
                 while (!isModbusInPolling){
                     try {
-                        readOpen.await();
+                        waitForWrite.await();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -613,7 +614,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
                             }
                         });
                         isModbusInPolling = false;
-                        writeOpen.signal();
+                        waitForRead.signal();
                         lock.unlock();
                         Log.d(TAG, "modbus doInBackground: " + String.valueOf(registers[1].getValue()) + "temp: " + String.valueOf(registers[4].getValue()));
                     }else {
@@ -634,7 +635,6 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
     }
 
     private void repeatModbus(boolean option){
-        new TaskModbus().execute("");
         if (option){
             modbusTimer = new Timer();
             modbusTimer.schedule(new TimerPollingModbus(), 0, 1100);
@@ -643,20 +643,6 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
             con1.close();
         }
 
-    }
-
-    private class TaskModbus extends AsyncTask<String, Void, String>{
-        @Override
-        protected String doInBackground(String... params) {
-            String ret = "true";
-            return ret;
-        }
-
-        @Override
-        protected void onPostExecute(String ret) {
-            super.onPostExecute(ret);
-
-        }
     }
 
     private void setModbusUI(Register [] registers){
@@ -726,7 +712,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
                                 @Override
                                 public void run() {
                                     isModbusInPolling = true;
-                                    readOpen.signal();
+                                    waitForWrite.signal();
                                     lock.unlock();
                                 }
                             });

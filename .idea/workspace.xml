@@ -15,18 +15,11 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/fileSnapshots.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/outputFileStates.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/outputFileStates.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/taskArtifacts.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugAndroidTestJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugAndroidTestJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugAndroidTestJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugAndroidTestJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugUnitTestJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugUnitTestJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugUnitTestJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugUnitTestJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/generated/mockable-android-23.jar" afterPath="$PROJECT_DIR$/build/generated/mockable-android-23.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nuvoton/nuwicam/LiveFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nuvoton/nuwicam/LiveFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/ModbusRTUTCPTransport.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/ModbusRTUTCPTransport.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ModbusMessageImpl.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/msg/ModbusMessageImpl.java" />
     </list>
     <ignored path="NuWicam Player.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -57,22 +50,22 @@
       <file leaf-file-name="LiveFragment.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nuvoton/nuwicam/LiveFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.49825785">
-              <caret line="729" column="50" selection-start-line="729" selection-start-column="50" selection-end-line="729" selection-end-column="50" />
+            <state vertical-scroll-proportion="0.8292683">
+              <caret line="651" column="46" selection-start-line="651" selection-start-column="46" selection-end-line="651" selection-end-column="46" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#6542#8425#0" expanded="true" />
-                <element signature="e#8424#8425#0" expanded="true" />
-                <element signature="e#12668#13143#0" expanded="true" />
-                <element signature="e#13142#13143#0" expanded="true" />
-                <element signature="e#16457#16473#0" expanded="true" />
-                <element signature="e#18352#18367#0" expanded="true" />
-                <element signature="e#21473#21687#0" expanded="true" />
-                <element signature="e#21686#21687#0" expanded="true" />
-                <element signature="e#22062#22291#0" expanded="true" />
-                <element signature="e#22290#22291#0" expanded="true" />
-                <element signature="e#25800#26142#0" expanded="true" />
-                <element signature="e#26141#26142#0" expanded="true" />
+                <element signature="e#6548#8433#0" expanded="true" />
+                <element signature="e#8432#8433#0" expanded="true" />
+                <element signature="e#12676#13151#0" expanded="true" />
+                <element signature="e#13150#13151#0" expanded="true" />
+                <element signature="e#16465#16481#0" expanded="true" />
+                <element signature="e#18360#18375#0" expanded="true" />
+                <element signature="e#21523#21737#0" expanded="true" />
+                <element signature="e#21736#21737#0" expanded="true" />
+                <element signature="e#22114#22343#0" expanded="true" />
+                <element signature="e#22342#22343#0" expanded="true" />
+                <element signature="e#25473#25819#0" expanded="true" />
+                <element signature="e#25818#25819#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -101,7 +94,7 @@
       <file leaf-file-name="ModbusRTUTCPTransport.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/ModbusRTUTCPTransport.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.3333335">
+            <state vertical-scroll-proportion="-7.0740743">
               <caret line="274" column="0" selection-start-line="274" selection-start-column="0" selection-end-line="274" selection-end-column="0" />
               <folding>
                 <element signature="e#4967#5059#0" expanded="true" />
@@ -115,7 +108,7 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/ModbusRTUTCPTransaction.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="98" column="26" selection-start-line="98" selection-start-column="26" selection-end-line="98" selection-end-column="26" />
+              <caret line="198" column="0" selection-start-line="198" selection-start-column="0" selection-end-line="198" selection-end-column="0" />
               <folding>
                 <element signature="e#2481#2482#0" expanded="true" />
                 <element signature="e#2505#2506#0" expanded="true" />
@@ -2352,7 +2345,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="2048" height="1125" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43310207" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -2797,7 +2790,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/ModbusRTUTCPTransport.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.3333335">
+        <state vertical-scroll-proportion="-7.0740743">
           <caret line="274" column="0" selection-start-line="274" selection-start-column="0" selection-end-line="274" selection-end-column="0" />
           <folding>
             <element signature="e#4967#5059#0" expanded="true" />
@@ -2809,7 +2802,7 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/net/wimpi/modbus/io/ModbusRTUTCPTransaction.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="98" column="26" selection-start-line="98" selection-start-column="26" selection-end-line="98" selection-end-column="26" />
+          <caret line="198" column="0" selection-start-line="198" selection-start-column="0" selection-end-line="198" selection-end-column="0" />
           <folding>
             <element signature="e#2481#2482#0" expanded="true" />
             <element signature="e#2505#2506#0" expanded="true" />
@@ -2819,22 +2812,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nuvoton/nuwicam/LiveFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.49825785">
-          <caret line="729" column="50" selection-start-line="729" selection-start-column="50" selection-end-line="729" selection-end-column="50" />
+        <state vertical-scroll-proportion="0.8292683">
+          <caret line="651" column="46" selection-start-line="651" selection-start-column="46" selection-end-line="651" selection-end-column="46" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#6542#8425#0" expanded="true" />
-            <element signature="e#8424#8425#0" expanded="true" />
-            <element signature="e#12668#13143#0" expanded="true" />
-            <element signature="e#13142#13143#0" expanded="true" />
-            <element signature="e#16457#16473#0" expanded="true" />
-            <element signature="e#18352#18367#0" expanded="true" />
-            <element signature="e#21473#21687#0" expanded="true" />
-            <element signature="e#21686#21687#0" expanded="true" />
-            <element signature="e#22062#22291#0" expanded="true" />
-            <element signature="e#22290#22291#0" expanded="true" />
-            <element signature="e#25800#26142#0" expanded="true" />
-            <element signature="e#26141#26142#0" expanded="true" />
+            <element signature="e#6548#8433#0" expanded="true" />
+            <element signature="e#8432#8433#0" expanded="true" />
+            <element signature="e#12676#13151#0" expanded="true" />
+            <element signature="e#13150#13151#0" expanded="true" />
+            <element signature="e#16465#16481#0" expanded="true" />
+            <element signature="e#18360#18375#0" expanded="true" />
+            <element signature="e#21523#21737#0" expanded="true" />
+            <element signature="e#21736#21737#0" expanded="true" />
+            <element signature="e#22114#22343#0" expanded="true" />
+            <element signature="e#22342#22343#0" expanded="true" />
+            <element signature="e#25473#25819#0" expanded="true" />
+            <element signature="e#25818#25819#0" expanded="true" />
           </folding>
         </state>
       </provider>
