@@ -4,8 +4,8 @@ package com.nuvoton.nuwicam;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -35,9 +35,22 @@ import com.nuvoton.socketmanager.ReadConfigure;
 import com.nuvoton.socketmanager.SocketInterface;
 import com.nuvoton.socketmanager.SocketManager;
 
+import net.wimpi.modbus.Modbus;
+import net.wimpi.modbus.ModbusException;
+import net.wimpi.modbus.io.ModbusRTUTCPTransaction;
+import net.wimpi.modbus.msg.ReadMultipleRegistersRequest;
+import net.wimpi.modbus.msg.ReadMultipleRegistersResponse;
+import net.wimpi.modbus.msg.WriteSingleRegisterRequest;
+import net.wimpi.modbus.msg.WriteSingleRegisterResponse;
+import net.wimpi.modbus.net.RTUTCPMasterConnection;
+import net.wimpi.modbus.procimg.Register;
+import net.wimpi.modbus.procimg.SimpleRegister;
+
 import org.json.JSONObject;
 
 import java.io.File;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,10 +61,22 @@ import java.util.TimerTask;
  * A simple {@link Fragment} subclass.
  */
 public class LiveFragment extends Fragment implements OnClickListener, OnSeekBarChangeListener, FFmpegListener, SocketInterface{
+    private WriteSingleRegisterRequest wreq;
+    private WriteSingleRegisterResponse wres;
+    private ArrayList<ImageButton> lightButtonList = new ArrayList<>();
+    private int temperature, light;
+    private int [] lightArray = new int[6];
+    private ReadMultipleRegistersResponse res;
+    private ReadMultipleRegistersRequest req;
+    private RTUTCPMasterConnection con = null;
+    private ModbusRTUTCPTransaction trans1 = null, trans2 = null;
+    private InetAddress addr = null;
+    int port = Modbus.DEFAULT_PORT;
+    private String modbusURL;
     private boolean isTCP = false;
     private Handler handler = new Handler();
     private static int counter = 0;
-    private Timer redDotTimer, checkTimer, pollingTimer;
+    private Timer modbusTimer, checkTimer, pollingTimer;
     private boolean flashOn = true;
     private String localURL;
     private SocketManager socketManager;
@@ -59,7 +84,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
     private int orientation;
     private String plarform, cameraSerial;
     private ProgressBar progressBar;
-    private TextView onlineText;
+    private TextView onlineText, temperatureText;
     private ImageView redDot;
     private boolean isPlaying = false, isTracking = false;
     private int mCurrentTimeS;
@@ -94,6 +119,9 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
                 break;
             case R.id.expandButton:
                 Log.d(TAG, "onClick: expand");
+                break;
+            case 10:
+                Log.d(TAG, "onClick: 10");
                 break;
             default:
                 break;
@@ -144,8 +172,46 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
         seekBar.setEnabled(false);
 
         onlineText = (TextView) thisView.findViewById(R.id.onlineText);
+        temperatureText = (TextView) thisView.findViewById(R.id.temperature);
         progressBar = (ProgressBar) thisView.findViewById(R.id.progressBar);
         redDot = (ImageView) thisView.findViewById(R.id.redDot);
+        for (int i=0; i<6; i++){
+            final int lightIndex = i;
+            final ImageButton button = (ImageButton) thisView.findViewWithTag(String.valueOf(100 + i));
+            button.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int lightValue = lightArray[lightIndex], lightFinalValue = 0;
+                    lightValue = (lightValue == 0) ? 1 : 0;
+                    lightArray[lightIndex] = lightValue;
+                    for (int i=0; i<6; i++){
+                        lightFinalValue =  (lightArray[i] << i) | lightFinalValue ;
+                    }
+                    light = lightFinalValue;
+                    if (lightIndex == 0 || lightIndex == 1){
+                        if (lightValue == 0){
+                            button.setImageResource(R.drawable.recordflashon);
+                        }else {
+                            button.setImageResource(R.drawable.recordflashoff);
+                        }
+                    }else if (lightIndex == 2 || lightIndex == 3){
+                        if (lightValue == 0){
+                            button.setImageResource(R.drawable.lighton);
+                        }else {
+                            button.setImageResource(R.drawable.lightoff);
+                        }
+                    }else{
+                        if (lightValue == 0){
+                            button.setImageResource(R.drawable.lightblueon);
+                        }else {
+                            button.setImageResource(R.drawable.lightblueoff);
+                        }
+                    }
+                    setLightValue(light);
+                }
+            });
+            lightButtonList.add(button);
+        }
     }
 
     @Override
@@ -168,6 +234,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
         repeatCheck(false);
         repeatRedDot(false);
         repeatPolling(false);
+        repeatModbus(false);
     }
 
     @Override
@@ -296,10 +363,12 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
         public void run(){
             Log.d(TAG, "run: timer polling check " + String.valueOf(counter));
             if (counter >= 5){
-                onlineText.setText(R.string.offline);
+//                onlineText.setText(R.string.offline);
                 repeatCheck(true);
                 repeatRedDot(false);
                 repeatPolling(false);
+                repeatModbus(false);
+
             }
             counter++;
         }
@@ -445,6 +514,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
         repeatCheck(false);
         repeatPolling(true);
         setDataSource();
+        repeatModbus(true);
     }
 
     @Override
@@ -464,7 +534,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
         isTCP = preference.getBoolean("Transmission", false);
         localURL = new String(urlString);
         String [] ipCut = urlString.split("/");
-        String ip = ipCut[2];
+        String ip = modbusURL = ipCut[2];
         String url = "http://" + ip + ":80/cgi-bin/";
         return url;
     }
@@ -481,5 +551,159 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
         }
     }
 
+    private class TimerPollingModbus extends TimerTask{
+        @Override
+        public void run() {
+            int ref = 3;
+            int count = 5;
+            try {
+                addr = InetAddress.getByName("192.168.100.1");
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
+            if (con == null){
+                con = new RTUTCPMasterConnection(addr, Modbus.DEFAULT_PORT);
+                try {
+                    con.connect();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (con.isConnected()){
+                Log.d(TAG, "doInBackground: modbus connected");
+                req = new ReadMultipleRegistersRequest(ref, count);
+                req.setUnitID(1);
+                trans1 = new ModbusRTUTCPTransaction(con);
+                trans1.setRequest(req);
+                try {
+                    trans1.execute();
+                    try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    res = (ReadMultipleRegistersResponse) trans1.getResponse();
+                    if (res != null){
+                        final Register [] registers = res.getRegisters();
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                setModbusUI(registers);
+                            }
+                        });
+                        Log.d(TAG, "modbus doInBackground: " + String.valueOf(registers[1].getValue()) + "temp: " + String.valueOf(registers[4].getValue()));
+                    }else {
+                        temperatureText.setText("N/A \u2109");
+                        Log.d(TAG, "modbus doInBackground: null res");
+                    }
+
+                } catch (ModbusException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void repeatModbus(boolean option){
+        new TaskModbus().execute("");
+        if (option){
+            modbusTimer = new Timer();
+            modbusTimer.schedule(new TimerPollingModbus(), 0, 1050);
+        }else {
+            modbusTimer.cancel();
+        }
+
+    }
+
+    private class TaskModbus extends AsyncTask<String, Void, String>{
+        @Override
+        protected String doInBackground(String... params) {
+            String ret = "true";
+            return ret;
+        }
+
+        @Override
+        protected void onPostExecute(String ret) {
+            super.onPostExecute(ret);
+
+        }
+    }
+
+    private void setModbusUI(Register [] registers){
+        light = registers[1].getValue();
+        for (int i=0; i<6; i++){
+            ImageButton button = lightButtonList.get(i);
+            int lightValue = (light >> i) & 1;
+            lightArray [i] = lightValue;
+            if (i == 0 || i== 1){
+                if (lightValue == 0){
+                    button.setImageResource(R.drawable.recordflashon);
+                }else {
+                    button.setImageResource(R.drawable.recordflashoff);
+                }
+            }else if (i == 2 || i == 3){
+                if (lightValue == 0){
+                    button.setImageResource(R.drawable.lighton);
+                }else {
+                    button.setImageResource(R.drawable.lightoff);
+                }
+            }else{
+                if (lightValue == 0){
+                    button.setImageResource(R.drawable.lightblueon);
+                }else {
+                    button.setImageResource(R.drawable.lightblueoff);
+                }
+
+            }
+        }
+        temperature = registers[4].getValue();
+        temperatureText.setText(String.valueOf(temperature) + " \u2109");
+    }
+
+    private void setLightValue(int light) {
+        int ref = 4;
+        try {
+            addr = InetAddress.getByName("192.168.100.1");
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+
+        if (con == null) {
+            con = new RTUTCPMasterConnection(addr, Modbus.DEFAULT_PORT);
+            try {
+                con.connect();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (con.isConnected()) {
+            Register register = new SimpleRegister(light);
+            wreq = new WriteSingleRegisterRequest(ref, register);
+            wreq.setUnitID(1);
+            Log.d(TAG, "doInBackground: modbus connected");
+            trans2 = new ModbusRTUTCPTransaction(con);
+            trans2.setRequest(wreq);
+            try {
+                trans2.execute();
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                wres = (WriteSingleRegisterResponse) trans2.getResponse();
+                if (wres != null) {
+                    Log.d(TAG, "modbus doInBackground: " + wres);
+                } else {
+                    temperatureText.setText("N/A \u2109");
+                    Log.d(TAG, "modbus doInBackground: null res");
+                }
+
+            } catch (ModbusException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
 

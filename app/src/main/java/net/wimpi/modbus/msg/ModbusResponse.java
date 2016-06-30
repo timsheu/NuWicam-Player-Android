@@ -88,9 +88,6 @@ public abstract class ModbusResponse
       case Modbus.WRITE_MULTIPLE_COILS:
         response = new WriteMultipleCoilsResponse();
         break;
-      case Modbus.READ_DEVICE_IDENTIFICATION:
-    	  response = new ReadDeviceIdentificationResponse();
-    	  break;
       default:
         response = new ExceptionResponse();
         break;

@@ -152,7 +152,7 @@ public abstract class ModbusMessageImpl
    * @param code the code of the function to be set.
    * @see net.wimpi.modbus.Modbus
    */
-  public void setFunctionCode(int code) {
+  protected void setFunctionCode(int code) {
     m_FunctionCode = code;
     //setChanged(true);
   }//setFunctionCode

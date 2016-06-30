@@ -33,6 +33,7 @@ dependencies {
     compile 'info.hoang8f:android-segmented:1.0.6'
     compile 'com.android.support:percent:23.4.0'
     compile 'com.android.support:design:23.1.1'
-    compile 'com.google.code.gson:gson:2.3.1'
+    compile group: 'org.rxtx', name: 'rxtx', version: '2.1.7'
+
 }
 

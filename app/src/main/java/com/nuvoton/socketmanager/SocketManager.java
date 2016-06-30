@@ -3,7 +3,6 @@ package com.nuvoton.socketmanager;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.google.gson.Gson;
 import com.nuvoton.nuwicam.FileContent;
 
 import org.json.JSONObject;

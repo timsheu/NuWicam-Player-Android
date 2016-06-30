@@ -61,18 +61,6 @@ public interface Modbus {
    * for <tt>read input registers</tt>.
    */
   public static final int READ_INPUT_REGISTERS = 4;
-  
-  /**
-   * Defines a class 1 function code
-   * for <tt>read device description</tt>.
-   */
-  public static final int READ_DEVICE_IDENTIFICATION = 43;
-  
-  /**
-   * Defines a class 1 function code
-   * for <tt>diagnostics</tt>.
-   */
-  public static final int DIAGNOSTICS = 8;
 
   /**
    * Defines a class 1 function code

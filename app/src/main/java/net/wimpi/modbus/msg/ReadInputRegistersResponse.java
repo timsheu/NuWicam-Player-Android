@@ -16,10 +16,8 @@
 
 package net.wimpi.modbus.msg;
 
-import net.wimpi.modbus.io.BytesInputStream;
 import net.wimpi.modbus.procimg.InputRegister;
 import net.wimpi.modbus.procimg.ProcessImageFactory;
-import net.wimpi.modbus.util.ModbusUtil;
 import net.wimpi.modbus.ModbusCoupler;
 import net.wimpi.modbus.Modbus;
 
@@ -42,8 +40,7 @@ public final class ReadInputRegistersResponse
   //instance attributes
   private int m_ByteCount;
   //private int[] m_RegisterValues;
-//  private InputRegister[] m_Registers;
-  private byte[] m_Bytes;
+  private InputRegister[] m_Registers;
 
   /**
    * Constructs a new <tt>ReadInputRegistersResponse</tt>
@@ -53,6 +50,23 @@ public final class ReadInputRegistersResponse
     super();
     setFunctionCode(Modbus.READ_INPUT_REGISTERS);
   }//constructor
+
+
+  /**
+   * Constructs a new <tt>ReadInputRegistersResponse</tt>
+   * instance.
+   *
+   * @param registers the InputRegister[] holding response input registers.
+   */
+  public ReadInputRegistersResponse(InputRegister[] registers) {
+    super();
+    setFunctionCode(Modbus.READ_INPUT_REGISTERS);
+    m_ByteCount = registers.length * 2;
+    m_Registers = registers;
+    //set correct data length excluding unit id and fc
+    setDataLength(m_ByteCount + 1);
+  }//constructor
+
 
   /**
    * Returns the number of bytes that have been read.
@@ -105,7 +119,7 @@ public final class ReadInputRegistersResponse
     if (index >= getWordCount()) {
       throw new IndexOutOfBoundsException();
     } else {
-      return getRegisters()[index];
+      return m_Registers[index];
     }
   }//getRegister
 
@@ -128,7 +142,7 @@ public final class ReadInputRegistersResponse
     if (index >= getWordCount()) {
       throw new IndexOutOfBoundsException();
     } else {
-      return getRegisters()[index].toUnsignedShort();
+      return m_Registers[index].toUnsignedShort();
     }
   }//getRegisterValue
 
@@ -139,62 +153,29 @@ public final class ReadInputRegistersResponse
    * @return a <tt>InputRegister[]</tt> instance.
    */
   public InputRegister[] getRegisters() {
-	  InputRegister[] registers = new InputRegister[getWordCount()];
-	  
-	  DataInput din = new BytesInputStream(m_Bytes);
-	  
-	  ProcessImageFactory pimf = ModbusCoupler.getReference().getProcessImageFactory();
-	  for (int k = 0; k < getWordCount(); k++) {
-		  try {
-			registers[k] = pimf.createInputRegister(din.readByte(), din.readByte());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	  }
-	  
-    return registers;
+    return m_Registers;
   }//getRegisters
-  
-  /**
-   * Returns a float representation of the first four bytes of the response
-   * @return Float object from the first four bytes of the array
-   */
-  public float getFloat() {
-	  return ModbusUtil.registersToFloat(m_Bytes);
-  }
-  
-  /**
-   * Returns the integer representation of the first two bytes of the response data
-   * @return int (actually short) from the first two bytes of the byte array (16-bit)
-   */
-  public int getInteger() {
-	  return ModbusUtil.registerToUnsignedShort(m_Bytes);
-  }
 
   public void writeData(DataOutput dout)
       throws IOException {
     dout.writeByte(m_ByteCount);
     for (int k = 0; k < getWordCount(); k++) {
-      dout.write(getRegisters()[k].toBytes());
+      dout.write(m_Registers[k].toBytes());
     }
   }//writeData
 
   public void readData(DataInput din)
       throws IOException {
     setByteCount(din.readUnsignedByte());
-    
-//    m_Bytes = ((BytesInputStream) din).getBuffer();
-    
+
+    InputRegister[] registers = new InputRegister[getWordCount()];
+    ProcessImageFactory pimf = ModbusCoupler.getReference().getProcessImageFactory();
+    for (int k = 0; k < getWordCount(); k++) {
+      registers[k] = pimf.createInputRegister(din.readByte(), din.readByte());
+    }
+    m_Registers = registers;
     //update data length
     setDataLength(getByteCount() + 1);
-    
-    m_Bytes = new byte[getByteCount()];
-    
-    for (int i = 0; i < m_Bytes.length; i++ ) {
-    	m_Bytes[i] = din.readByte();
-    }
-    
-    
   }//readData
 
 }//class ReadInputRegistersResponse
