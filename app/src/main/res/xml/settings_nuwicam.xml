@@ -92,9 +92,9 @@
         android:layout="@layout/p_category_version_layout">
 
         <Preference
-            android:key="APP Version number"
-            android:title="APP Version Number"
-            android:summary="1.0.6"
+            android:key="APP Version Number"
+            android:title="NuMaker NuWicam"
+            android:summary="APP Version 1.0.6"
             />
 
 

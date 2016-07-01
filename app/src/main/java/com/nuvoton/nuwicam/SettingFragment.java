@@ -39,11 +39,18 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     private static String platform, cameraSerial, preferenceName;
     private String TAG = "SettingFragment";
     private ArrayList<Preference> settingArrayList;
+    OnHideBottomBarListener onHideBottomBarListener;
+
     public static SettingFragment newInstance(Bundle bundle){
         platform = bundle.getString("Platform");
         cameraSerial = bundle.getString("CameraSerial");
         SettingFragment fragment = new SettingFragment();
         return fragment;
+    }
+
+    public interface OnHideBottomBarListener{
+        public void onHideBottomBar(boolean isHide);
+        public void onEnableClick(boolean isEnable);
     }
 
     public SettingFragment(){
@@ -63,7 +70,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         if (platform.equals("NuWicam")) {
             addPreferencesFromResource(R.xml.settings_nuwicam);
         }
-
+        if (!isAdded()) return;
         configure = ReadConfigure.getInstance(getActivity().getApplicationContext());
     }
 
@@ -83,16 +90,34 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     public void onResume() {
         super.onResume();
         Log.d(TAG, "onResume: ");
+        if (!isAdded()) return;
         getActivity().getApplicationContext().getSharedPreferences(preferenceName, Context.MODE_PRIVATE).registerOnSharedPreferenceChangeListener(this);
         updateSetting();
-
+        if (onHideBottomBarListener != null){
+            onHideBottomBarListener.onEnableClick(true);
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
         Log.d(TAG, "onPause: ");
+        if (!isAdded()) return;
         getActivity().getApplicationContext().getSharedPreferences(preferenceName, Context.MODE_PRIVATE).unregisterOnSharedPreferenceChangeListener(this);
+        if (onHideBottomBarListener != null){
+            onHideBottomBarListener.onEnableClick(false);
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (!isAdded()) return;
+        try{
+            onHideBottomBarListener = (OnHideBottomBarListener) getActivity();
+        }catch (ClassCastException e){
+            throw new ClassCastException(getActivity().toString() + " must implement onHideBottomBarListener");
+        }
     }
 
     private void determineSettings(String key, SharedPreferences sharedPreference){
@@ -205,6 +230,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
 
     private String getDeviceURL(){
         String cameraName = "Setup Camera " + cameraSerial;
+        if (!isAdded()) return "";
         SharedPreferences preference = getActivity().getApplicationContext().getSharedPreferences(cameraName, Context.MODE_PRIVATE);
         String urlString = preference.getString("URL", "DEFAULT");
         String [] ipCut = urlString.split("/");
@@ -216,7 +242,8 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     @Override
     public void showToastMessage(String message) {
         Log.d(TAG, "showToastMessage: ");
-        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+        if (!isAdded()) return;
+        Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -232,6 +259,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     @Override
     public void updateSettingContent(String category, String value) {
         String cameraName = "Setup Camera " + cameraSerial;
+        if (!isAdded()) return;
         SharedPreferences preference = getActivity().getApplicationContext().getSharedPreferences(cameraName, Context.MODE_PRIVATE);
         preference.edit().putString(category, value);
         preference.edit().commit();
@@ -256,6 +284,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     @Override
     public void updateSettingContent(String category, JSONObject map) {
         String cameraName = "Setup Camera " + cameraSerial;
+        if (!isAdded()) return;
         SharedPreferences preference = getActivity().getApplicationContext().getSharedPreferences(cameraName, Context.MODE_PRIVATE);
         if (category.equals("List Wi-Fi Setting")){
             EditTextPreference pref = (EditTextPreference)getPreferenceManager().findPreference("SSID");
@@ -278,14 +307,6 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
             preference.edit().putString("Password", password);
             preference.edit().apply();
         }else if(category.equals("List Video Setting")){
-            try{
-                String value = map.getString("value");
-                if (value.equals("0")){
-                    return;
-                }
-            }catch (JSONException e){
-                e.printStackTrace();
-            }
             String resolution = null;
             try {
                 resolution = map.getString("VINWIDTH");

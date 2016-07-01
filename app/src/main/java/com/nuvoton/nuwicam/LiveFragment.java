@@ -102,9 +102,10 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
     private int mAudioStreamNo = FFmpegPlayer.UNKNOWN_STREAM;
     private int mSubtitleStreamNo = FFmpegPlayer.NO_STREAM;
     private static final String TAG = "LiveFragment";
+    private Runnable runnableContainer;
 
     private boolean isHide = false;
-    OnHideBottomBarListener mCallback;
+    OnHideBottomBarListener onHideBottomBarListener;
 
     @Override
     public void onClick(View v) {
@@ -148,6 +149,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
 
     public interface OnHideBottomBarListener{
         public void onHideBottomBar(boolean isHide);
+        public void onEnableClick(boolean isEnable);
     }
 
 
@@ -181,6 +183,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
         for (int i=0; i<6; i++){
             final int lightIndex = i;
             final ImageButton button = (ImageButton) thisView.findViewWithTag(String.valueOf(100 + i));
+            button.setEnabled(false);
             button.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -247,11 +250,18 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
         repeatRedDot(false);
         repeatPolling(false);
         repeatModbus(false);
+        if (checkTimer != null) checkTimer.cancel();
+        if (pollingTimer != null) pollingTimer.cancel();
+        if (modbusTimer != null) modbusTimer.cancel();
+        if (onHideBottomBarListener != null){
+            onHideBottomBarListener.onEnableClick(false);
+        }
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
+        if (!isAdded()) return;
         mVideoView = (SurfaceView) getActivity().findViewById(R.id.videoView);
         mVideoView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -262,11 +272,12 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
                 }else {
                     isHide = false;
                 }
-                mCallback.onHideBottomBar(isHide);
+                onHideBottomBarListener.onHideBottomBar(isHide);
                 return false;
             }
         });
         mMpegPlayer = new FFmpegPlayer((FFmpegDisplay) mVideoView, this);
+        if (!isAdded()) return;
         configure = ReadConfigure.getInstance(getActivity().getApplicationContext());
 
     }
@@ -275,6 +286,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
     public void onConfigurationChanged(Configuration newConfig) {
         Log.d(TAG, "onConfigurationChanged: live fragment");
         super.onConfigurationChanged(newConfig);
+        if (!isAdded()) return;
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         populateViewForOrientation(inflater, (ViewGroup) getView());
         registerUI();
@@ -288,7 +300,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
                 }else {
                     isHide = false;
                 }
-                mCallback.onHideBottomBar(isHide);
+                onHideBottomBarListener.onHideBottomBar(isHide);
                 return false;
             }
         });
@@ -310,8 +322,9 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
     @Override
     public void onStart() {
         super.onStart();
+        if (!isAdded()) return;
         try{
-            mCallback = (OnHideBottomBarListener) getActivity();
+            onHideBottomBarListener = (OnHideBottomBarListener) getActivity();
         }catch (ClassCastException e){
             throw new ClassCastException(getActivity().toString() + " must implement onHideBottomBarListener");
         }
@@ -319,6 +332,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
 
     @Override
     public void onResume() {
+        Log.d(TAG, "onResume: ");
         super.onResume();
         Bundle bundle = getArguments();
         if (bundle != null){
@@ -326,6 +340,14 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
             cameraSerial = getArguments().getString("CameraSerial");
         }
         repeatCheck(true);
+        if (onHideBottomBarListener != null){
+            onHideBottomBarListener.onEnableClick(true);
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
     }
 
     public void determineOrientation(){
@@ -380,7 +402,14 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
                 repeatRedDot(false);
                 repeatPolling(false);
                 repeatModbus(false);
-
+                if (!isAdded()) return;
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        temperatureText.setText("N/A \u2103");
+                        setButtonEnable(false);
+                    }
+                });
             }
             counter++;
         }
@@ -408,6 +437,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
         }else if (option == false){
 //            redDotTimer.cancel();
             handler.removeCallbacks(timerSetRedDot);
+            handler.removeCallbacks(runnableContainer);
         }
     }
 
@@ -438,7 +468,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
                 "DroidSansFallback.ttf");
         params.put("ass_default_font_path", assFont.getAbsolutePath());
         params.put("fflags", "nobuffer");
-        params.put("probesize", "5120");
+        params.put("probesize", "512");
         params.put("flush_packets", "1");
         if (isTCP){
             params.put("rtsp_transport", "tcp");
@@ -527,6 +557,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
         repeatPolling(true);
         setDataSource();
         repeatModbus(true);
+        setButtonEnable(true);
     }
 
     @Override
@@ -541,6 +572,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
 
     private String getDeviceURL(){
         String cameraName = "Setup Camera " + cameraSerial;
+        if (!isAdded()) return "";
         SharedPreferences preference = getActivity().getSharedPreferences(cameraName, Context.MODE_PRIVATE);
         String urlString = preference.getString("URL", "DEFAULT");
         isTCP = preference.getBoolean("Transmission", false);
@@ -607,7 +639,8 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
                     res = (ReadMultipleRegistersResponse) trans1.getResponse();
                     if (res != null){
                         final Register [] registers = res.getRegisters();
-                        getActivity().runOnUiThread(new Runnable() {
+                        if (!isAdded()) return;
+                        getActivity().runOnUiThread(runnableContainer = new Runnable() {
                             @Override
                             public void run() {
                                 setModbusUI(registers);
@@ -618,12 +651,6 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
                         lock.unlock();
                         Log.d(TAG, "modbus doInBackground: " + String.valueOf(registers[1].getValue()) + "temp: " + String.valueOf(registers[4].getValue()));
                     }else {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                temperatureText.setText("N/A \u2103");
-                            }
-                        });
                         Log.d(TAG, "modbus doInBackground: null res");
                     }
 
@@ -639,8 +666,12 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
             modbusTimer = new Timer();
             modbusTimer.schedule(new TimerPollingModbus(), 0, 1100);
         }else {
-            modbusTimer.cancel();
-            con1.close();
+            if (modbusTimer != null){
+                modbusTimer.cancel();
+            }
+            if (con1 != null){
+                con1.close();
+            }
         }
 
     }
@@ -708,6 +739,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
                         wres = new WriteSingleRegisterResponse();
                         Log.d(TAG, "doInBackground: " + wres);
                         if (wres != null){
+                            if (!isAdded()) return null;
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -725,6 +757,13 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
                     }
                 }
             return null;
+        }
+    }
+
+    private void setButtonEnable(boolean enable){
+        for (int i=0; i<6; i++) {
+            ImageButton button = (ImageButton) thisView.findViewWithTag(String.valueOf(100 + i));
+            button.setEnabled(enable);
         }
     }
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NuWicam Player</string>
+    <string name="app_name">NuWicam</string>
     <string name="dvr">DVR</string>
     <string name="skyeye">SkyEye</string>
 
@@ -10,7 +10,7 @@
     <string name="audio_category_title_dvr">Audio Stream</string>
     <string name="wifi_category_title_dvr">Wireless Setup</string>
     <string name="info_category_title_dvr">Device Information</string>
-    <string name="version_category_title">APP Version</string>
+    <string name="version_category_title">APP Information</string>
 
     <string name="online">ONLINE</string>
     <string name="offline">OFFLINE</string>

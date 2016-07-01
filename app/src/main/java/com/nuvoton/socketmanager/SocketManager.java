@@ -159,7 +159,9 @@ public class SocketManager {
                         socketInterface.updateSettingContent("Recorder Status", jsonObject);
                     }
                 }else if(httpcmd.equals(CMDGET_ALIVE)){
-                    if (result != null){
+                    jsonObject = new JSONObject(result);
+                    String resolution = (String) jsonObject.get("BITRATE");
+                    if (resolution != null){
                         Log.d(TAG,"device is alive");
                         socketInterface.deviceIsAlive();
                     }else {

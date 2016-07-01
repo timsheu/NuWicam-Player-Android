@@ -15,7 +15,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-public class LivePage extends AppCompatActivity implements LiveFragment.OnHideBottomBarListener {
+public class LivePage extends AppCompatActivity implements LiveFragment.OnHideBottomBarListener, SettingFragment.OnHideBottomBarListener {
     // live view callbacks
     public void onHideBottomBar(boolean isHide){
         if (isHide){
@@ -23,6 +23,11 @@ public class LivePage extends AppCompatActivity implements LiveFragment.OnHideBo
         } else {
             bottomNavigation.restoreBottomNavigation(true);
         }
+    }
+
+    public void onEnableClick(boolean isEnable){
+        bottomNavigation.setEnabled(isEnable);
+        Log.d(TAG, "onEnableClick: " + String.valueOf(isEnable));
     }
 
     private int index=0;
@@ -110,7 +115,8 @@ public class LivePage extends AppCompatActivity implements LiveFragment.OnHideBo
         bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
             public boolean onTabSelected(int position, boolean wasSelected){
-                index = position;
+                if (index == position) return true;
+                
                 if (position == 0){
                     LiveFragment fragment = LiveFragment.newInstance(bundle);
                     fragment.setArguments(bundle);
@@ -125,6 +131,7 @@ public class LivePage extends AppCompatActivity implements LiveFragment.OnHideBo
                             .commit();
                 }
                 bottomNavigation.setNotification(0, position);
+                index = position;
                 return true;
             }
         });

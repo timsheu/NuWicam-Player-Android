@@ -272,6 +272,7 @@ public class ModbusRTUTCPTransport implements ModbusTransport
 				
 				// check the CRC against the received one...
                 int option = 0;
+				if(packetLength <= 0) return null;
 				if (ModbusUtil.unsignedByteToInt(inBuffer[packetLength - 2]) != crc[0]
 						|| ModbusUtil.unsignedByteToInt(inBuffer[packetLength - 1]) != crc[1])
 				{
