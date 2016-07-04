@@ -8,8 +8,8 @@ android {
         applicationId "com.nuvoton.nuwicam"
         minSdkVersion 19
         targetSdkVersion 23
-        versionCode 106
-        versionName "1.0.6"
+        versionCode 108
+        versionName "1.0.8"
     }
     buildTypes {
         release {

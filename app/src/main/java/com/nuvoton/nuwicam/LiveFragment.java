@@ -22,6 +22,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.os.Handler;
+import android.widget.Toast;
 
 import com.appunite.ffmpeg.FFmpegError;
 import com.appunite.ffmpeg.FFmpegPlayer;
@@ -64,7 +65,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * A simple {@link Fragment} subclass.
  */
 public class LiveFragment extends Fragment implements OnClickListener, OnSeekBarChangeListener, FFmpegListener, SocketInterface{
-    private boolean isModbusInPolling = true;
+    private boolean isModbusInPolling = true, isModbusAlive = true;
     final Lock lock = new ReentrantLock();
     final Condition waitForWrite = lock.newCondition(), waitForRead = lock.newCondition();
     private WriteSingleRegisterRequest wreq;
@@ -81,7 +82,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
     private String modbusURL;
     private boolean isTCP = false;
     private Handler handler = new Handler();
-    private static int counter = 0;
+    private static int counterPolling = 0, counterModbus = 0;
     private Timer modbusTimer, checkTimer, pollingTimer;
     private boolean flashOn = true;
     private String localURL;
@@ -395,8 +396,8 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
 
     private class TimerPollingCheck extends TimerTask{
         public void run(){
-            Log.d(TAG, "run: timer polling check " + String.valueOf(counter));
-            if (counter >= 5){
+            Log.d(TAG, "run: timer polling check " + String.valueOf(counterPolling));
+            if (counterPolling > 5){
 //                onlineText.setText(R.string.offline);
                 repeatCheck(true);
                 repeatRedDot(false);
@@ -410,8 +411,9 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
                         setButtonEnable(false);
                     }
                 });
+                showToastMessage("No response, reset status", Toast.LENGTH_LONG);
             }
-            counter++;
+            counterPolling++;
         }
     }
 
@@ -432,10 +434,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
         Log.d(TAG, "repeatRedDot: " + String.valueOf(option));
         if (option == true){
             handler.post(timerSetRedDot);
-//            redDotTimer = new Timer(true);
-//            redDotTimer.schedule(new TimerSetRedDot(), 0, 1000);
         }else if (option == false){
-//            redDotTimer.cancel();
             handler.removeCallbacks(timerSetRedDot);
             handler.removeCallbacks(runnableContainer);
         }
@@ -490,7 +489,6 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
         }
         Log.d(TAG, "onFFDataSourceLoaded: loaded");
         progressBar.setVisibility(View.GONE);
-//        mMpegPlayer.pause();
         mMpegPlayer.resume();
         repeatCheck(false);
     }
@@ -521,7 +519,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
 
     public void onFFUpdateTime(long currentTimeUs, long videoDurationUs, boolean isFinished){
         Log.d(TAG, "onFFUpdateTime: ");
-        counter = 0;
+        counterPolling = 0;
         if ( isTracking == false){
             mCurrentTimeS = (int)(currentTimeUs / 1000000);
             int videoDurationS = (int)(videoDurationUs / 1000000);
@@ -540,7 +538,17 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
 
     //socket manager delegate
     @Override
-    public void showToastMessage(String message) {
+    public void showToastMessage(final String message, final int duration) {
+        if (isAdded()){
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.d(TAG, "showToastMessage run: " + message);
+                    Toast.makeText(getActivity(), message, duration).show();
+                }
+            });
+
+        }
 
     }
 
@@ -552,7 +560,6 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
     @Override
     public void deviceIsAlive() {
         onlineText.setText(R.string.online);
-//        onlineText.setTextColor(0x000000);
         repeatCheck(false);
         repeatPolling(true);
         setDataSource();
@@ -608,11 +615,12 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
             }
             if (con1 == null){
                 con1 = new RTUTCPMasterConnection(addr, Modbus.DEFAULT_PORT);
-                try {
-                    con1.connect();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            }
+
+            try {
+                con1.connect();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
             if (con1.isConnected()){
@@ -644,16 +652,38 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
                             @Override
                             public void run() {
                                 setModbusUI(registers);
+                                setButtonEnable(true);
+                                progressBar.setVisibility(View.INVISIBLE);
                             }
                         });
                         isModbusInPolling = false;
-                        waitForRead.signal();
-                        lock.unlock();
-                        Log.d(TAG, "modbus doInBackground: " + String.valueOf(registers[1].getValue()) + "temp: " + String.valueOf(registers[4].getValue()));
+                        Log.d(TAG, "modbus doInBackground: not null res ");
+//                        Log.d(TAG, "modbus doInBackground: " + String.valueOf(registers[1].getValue()) + "temp: " + String.valueOf(registers[4].getValue()));
                     }else {
+                        counterModbus++;
                         Log.d(TAG, "modbus doInBackground: null res");
-                    }
+                        if (isAdded()){
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    progressBar.setVisibility(View.VISIBLE);
+                                    setButtonEnable(false);
+                                }
+                            });
+                        }
+                        if (counterModbus < 3 ){
+                            showToastMessage("Waiting for Modbus response...", Toast.LENGTH_SHORT);
+                        }else{
+                            showToastMessage("Reset Modbus connection.", Toast.LENGTH_LONG);
+                            counterModbus = 0;
+                            repeatModbus(false);
+                            repeatModbus(true);
+                        }
 
+
+                    }
+                    waitForRead.signal();
+                    lock.unlock();
                 } catch (ModbusException e) {
                     e.printStackTrace();
                 }
@@ -703,8 +733,10 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
 
             }
         }
-        temperature = registers[4].getValue();
-        temperatureText.setText(String.valueOf(temperature) + " \u2103");
+        if (registers.length > 4){
+            temperature = registers[4].getValue();
+            temperatureText.setText(String.valueOf(temperature) + " \u2103");
+        }
     }
     private class SetLightValueTask extends AsyncTask<String, Void, Void>{
 

@@ -25,7 +25,6 @@ import net.wimpi.modbus.util.ModbusUtil;
  */
 public class ModbusRTUTCPTransport implements ModbusTransport
 {
-	
 	public static final String logId = "[ModbusRTUTCPTransport]: ";
 	
 	// The input stream from which reading the Modbus frames
@@ -257,8 +256,11 @@ public class ModbusRTUTCPTransport implements ModbusTransport
 				}
 				
 				// check if timedOut
-				if (this.isTimedOut)
+				if (this.isTimedOut){
+
 					throw new ModbusIOException("I/O exception - read timeout.\n");
+				}
+
 				
 				// read the remaining bytes
 				this.inputStream.read(inBuffer, 3, packetLength);
@@ -304,7 +306,6 @@ public class ModbusRTUTCPTransport implements ModbusTransport
 		{
 			// debug
 			System.err.println(ModbusRTUTCPTransport.logId + "Error while reading from socket: " + e);
-			
 			// clean the input stream
 			try
 			{
@@ -492,7 +493,7 @@ public class ModbusRTUTCPTransport implements ModbusTransport
 		inputStream.close();
 		outputStream.close();
 	}// close
-	
+
 	/*
 	 * private void getResponse(int fn, BytesOutputStream out) throws
 	 * IOException { int bc = -1, bc2 = -1, bcw = -1; int inpBytes = 0; byte

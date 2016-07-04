@@ -240,10 +240,10 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     }
 
     @Override
-    public void showToastMessage(String message) {
+    public void showToastMessage(String message, int duration) {
         Log.d(TAG, "showToastMessage: ");
         if (!isAdded()) return;
-        Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity().getApplicationContext(), message, duration).show();
     }
 
     @Override
