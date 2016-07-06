@@ -1,8 +1,11 @@
 package com.nuvoton.nuwicam;
 
+import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.os.Handler;
+import android.support.v4.widget.ListViewAutoScrollHelper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceManager;
@@ -12,6 +15,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import android.app.FragmentManager;
 import android.view.Surface;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -30,6 +34,14 @@ public class LivePage extends AppCompatActivity implements LiveFragment.OnHideBo
         Log.d(TAG, "onEnableClick: " + String.valueOf(isEnable));
     }
 
+    @Override
+    public void restartStream() {
+        Log.d(TAG, "restartStream: ");
+        if (liveFragment != null){
+            liveFragment.stopStreamFromSetting();
+        }
+    }
+
     private int index=0;
     private String platform = "NuWicam";
     private String cameraSerial = "5";
@@ -39,6 +51,8 @@ public class LivePage extends AppCompatActivity implements LiveFragment.OnHideBo
     private AHBottomNavigation bottomNavigation;
     private ArrayList<AHBottomNavigationItem> bottomNavigationItems = new ArrayList<>();
     private FragmentManager fragmentManager = getFragmentManager();
+    private LiveFragment liveFragment = null;
+    private SettingFragment settingFragment = null;
     @Override
     public void onConfigurationChanged(Configuration newConfig){
         super.onConfigurationChanged(newConfig);
@@ -94,7 +108,12 @@ public class LivePage extends AppCompatActivity implements LiveFragment.OnHideBo
         final Bundle bundle = new Bundle();
         bundle.putString("Platform", platform);
         bundle.putString("CameraSerial", cameraSerial);
-
+        if (liveFragment == null){
+            liveFragment = LiveFragment.newInstance(bundle);
+        }
+        if (settingFragment == null){
+            settingFragment = SettingFragment.newInstance(bundle);
+        }
         bottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_navigation);
         AHBottomNavigationItem liveItem = new AHBottomNavigationItem("Live", R.drawable.livetab);
         AHBottomNavigationItem settingItem = new AHBottomNavigationItem("Setting", R.drawable.geartab);
@@ -106,36 +125,38 @@ public class LivePage extends AppCompatActivity implements LiveFragment.OnHideBo
         bottomNavigation.setAccentColor(Color.parseColor("#007DFF"));
 
         bottomNavigation.setNotification(0, 0);
-        LiveFragment fragment = new LiveFragment();
-        fragmentManager.beginTransaction()
-                .replace(R.id.fragment_content, fragment)
-                .commit();
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
 
         bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
             public boolean onTabSelected(int position, boolean wasSelected){
                 if (index == position) return true;
-                
                 if (position == 0){
-                    LiveFragment fragment = LiveFragment.newInstance(bundle);
-                    fragment.setArguments(bundle);
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.fragment_content, fragment)
-                            .commit();
+                    FragmentTransaction trans = fragmentManager.beginTransaction();
+                    if (!liveFragment.isAdded()){
+                        trans.hide(settingFragment).add(R.id.fragment_content, liveFragment).commit();
+                    }else{
+                        trans.hide(settingFragment).show(liveFragment).commit();
+                    }
                 }else{
-                    SettingFragment fragment = SettingFragment.newInstance(bundle);
-                    fragment.setArguments(bundle);
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.fragment_content, fragment)
-                            .commit();
+                    FragmentTransaction trans = fragmentManager.beginTransaction();
+                    if (!settingFragment.isAdded()){
+                        trans.hide(liveFragment).add(R.id.fragment_content, settingFragment).commit();
+                    }else{
+                        trans.hide(liveFragment).show(settingFragment).commit();
+                    }
                 }
                 bottomNavigation.setNotification(0, position);
                 index = position;
                 return true;
             }
         });
-        changeFragment(0);
+        FragmentTransaction trans = fragmentManager.beginTransaction();
+        if (!liveFragment.isAdded()){
+            trans.add(R.id.fragment_content, liveFragment).commit();
+        }else{
+            trans.hide(settingFragment).show(liveFragment).commit();
+        }
     }
 
     private void changeFragment(int savedIndex){
@@ -144,16 +165,19 @@ public class LivePage extends AppCompatActivity implements LiveFragment.OnHideBo
         bundle.putString("CameraSerial", cameraSerial);
         index = savedIndex;
         if (index == 0){
-            LiveFragment fragment = LiveFragment.newInstance(bundle);
-            fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_content, fragment)
-                    .commit();
+            FragmentTransaction trans = fragmentManager.beginTransaction();
+            if (!liveFragment.isAdded()){
+                trans.hide(settingFragment).add(R.id.fragment_content, liveFragment).commit();
+            }else{
+                trans.hide(settingFragment).show(liveFragment).commit();
+            }
         }else{
-            SettingFragment fragment = new SettingFragment();
-            fragment.setArguments(bundle);
-            fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_content, fragment)
-                    .commit();
+            FragmentTransaction trans = fragmentManager.beginTransaction();
+            if (!settingFragment.isAdded()){
+                trans.hide(liveFragment).add(R.id.fragment_content, settingFragment).commit();
+            }else{
+                trans.hide(liveFragment).show(settingFragment).commit();
+            }
         }
         bottomNavigation.setNotification(0, index);
         bottomNavigation.setCurrentItem(index);
@@ -166,4 +190,30 @@ public class LivePage extends AppCompatActivity implements LiveFragment.OnHideBo
             bottomNavigation.restoreBottomNavigation(true);
         }
     }
+
+    private boolean exit = false;
+    @Override
+    public void onBackPressed() {
+        if (exit){
+            super.onBackPressed();
+            return;
+        }else {
+            Toast.makeText(this, "Press Back again to Exit !", Toast.LENGTH_SHORT).show();
+            exit = true;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    exit = false;
+                }
+            }, 3000);
+
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy: ");
+    }
+
 }

@@ -51,6 +51,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     public interface OnHideBottomBarListener{
         public void onHideBottomBar(boolean isHide);
         public void onEnableClick(boolean isEnable);
+        public void restartStream();
     }
 
     public SettingFragment(){
@@ -123,7 +124,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     private void determineSettings(String key, SharedPreferences sharedPreference){
         socketManager = new SocketManager();
         socketManager.setSocketInterface(this);
-        String command = getDeviceURL();
+        String command = new String( getDeviceURL() );
         sString baseCommand;
         String value, commandType = "";
         switch (key){
@@ -138,6 +139,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                     command = command + baseCommand.getValue() + "&VINWIDTH=640&JPEGENCWIDTH=640&VINHEIGHT=480&JPEGENCHEIGHT=480";
                 }
                 commandType = SocketManager.CMDSET_UPDATE_VIDEO;
+                Log.d(TAG, "determineSettings: Resolution");
                 break;
             case "Bit Rate":
                 videoCommandSet = configure.videoCommandSet;
@@ -146,6 +148,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 value = sharedPreference.getString(key, "1024");
                 command = command + baseCommand.getValue() + "&BITRATE=" + value;
                 commandType = SocketManager.CMDSET_UPDATE_VIDEO;
+                Log.d(TAG, "determineSettings: Bit Rate");
                 break;
             case "SSID":
                 String option = sharedPreference.getString(key, "NuWicam");
@@ -154,6 +157,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 baseCommand = (sString) targetCommand.get("Base Command");
                 command = command + baseCommand.getValue() + "&AP_SSID=" + option;
                 commandType = SocketManager.CMDSET_UPDATE_WIFI;
+                Log.d(TAG, "determineSettings: SSID");
                 break;
             case "Password":
                 option = sharedPreference.getString(key, "12345678");
@@ -173,11 +177,12 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                     targetCommand = videoCommandSet.get(2);
                     baseCommand = (sString) targetCommand.get("Base Command");
                     command = command + baseCommand.getValue();
+                }else {
+                    return;
                 }
                 commandType = SocketManager.CMDSET_RESTART_STREAM;
-
-                Log.d(TAG, "determineSettings: " + command);
                 if (socketManager != null){
+                    socketManager.setSocketInterface(this);
                     socketManager.executeSendGetTask(command, commandType);
                 }
                 sharedPreference.edit().apply();
@@ -186,7 +191,8 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 sharedPreference.edit().putString(key, option);
                 listPreference = (ListPreference) getPreferenceManager().findPreference(key);
                 listPreference.setValue(option);
-
+                onHideBottomBarListener.restartStream();
+                Log.d(TAG, "determineSettings: stream " + command);
                 return;
             case "Restart Wi-Fi":
                 option = sharedPreference.getString(key, "1");
@@ -195,11 +201,12 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                     targetCommand = videoCommandSet.get(1);
                     baseCommand = (sString) targetCommand.get("Base Command");
                     command = command + baseCommand.getValue();
-
+                }else {
+                    return;
                 }
                 commandType = SocketManager.CMDSET_RESTART_WIFI;
-                Log.d(TAG, "determineSettings: " + command);
                 if (socketManager != null){
+                    socketManager.setSocketInterface(this);
                     socketManager.executeSendGetTask(command, commandType);
                 }
                 sharedPreference.edit().apply();
@@ -207,6 +214,8 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 sharedPreference.edit().putString(key, option);
                 listPreference = (ListPreference) getPreferenceManager().findPreference(key);
                 listPreference.setValue(option);
+                onHideBottomBarListener.restartStream();
+                Log.d(TAG, "determineSettings: " + command);
                 return;
             case "Show Password":
                 option = sharedPreference.getString(key, "1");
@@ -221,8 +230,12 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 listPreference.setValue(option);
                 return;
         }
-        Log.d(TAG, "determineSettings: " + command);
+        String commandTemp = new String(getDeviceURL());
+        if (command.trim().equals(commandTemp)){
+            return;
+        }
         if (socketManager != null){
+            socketManager.setSocketInterface(this);
             socketManager.executeSendGetTask(command, commandType);
         }
         sharedPreference.edit().apply();
@@ -367,4 +380,5 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         socketManager.setCommandList(commandList);
         socketManager.executeSendGetTaskList(commandList, commandType);
     }
+
 }

@@ -23,6 +23,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.os.Handler;
 import android.widget.Toast;
+import android.app.FragmentManager;
+
 
 import com.appunite.ffmpeg.FFmpegError;
 import com.appunite.ffmpeg.FFmpegPlayer;
@@ -65,7 +67,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * A simple {@link Fragment} subclass.
  */
 public class LiveFragment extends Fragment implements OnClickListener, OnSeekBarChangeListener, FFmpegListener, SocketInterface{
-    private boolean isModbusInPolling = true, isModbusAlive = true;
+    private boolean isModbusInPolling = true, isModbusAlive = true, isRestart = false;
     final Lock lock = new ReentrantLock();
     final Condition waitForWrite = lock.newCondition(), waitForRead = lock.newCondition();
     private WriteSingleRegisterRequest wreq;
@@ -188,6 +190,13 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
             button.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (!isModbusAlive){
+                        if (isAdded()){
+                            Toast.makeText(getActivity(), "Modbus is not alive, disable buttons", Toast.LENGTH_SHORT).show();
+                            setButtonEnable(false);
+                            return;
+                        }
+                    }
                     repeatModbus(false);
                     lock.lock();
                     while (isModbusInPolling){
@@ -240,6 +249,8 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
             socketManager = new SocketManager();
         }
         socketManager.setSocketInterface(this);
+        if (isAdded()){
+        }
         // Inflate the layout for this fragment
         return thisView;
     }
@@ -247,6 +258,21 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
     @Override
     public void onPause() {
         super.onPause();
+        repeatCheck(false);
+        repeatRedDot(false);
+        repeatPolling(false);
+        repeatModbus(false);
+        if (checkTimer != null) checkTimer.cancel();
+        if (pollingTimer != null) pollingTimer.cancel();
+        if (modbusTimer != null) modbusTimer.cancel();
+        if (onHideBottomBarListener != null){
+            onHideBottomBarListener.onEnableClick(false);
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
         repeatCheck(false);
         repeatRedDot(false);
         repeatPolling(false);
@@ -344,6 +370,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
         if (onHideBottomBarListener != null){
             onHideBottomBarListener.onEnableClick(true);
         }
+
     }
 
     @Override
@@ -412,8 +439,10 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
                     }
                 });
                 showToastMessage("No response, reset status", Toast.LENGTH_LONG);
+                counterPolling = 0;
+            }else {
+                counterPolling++;
             }
-            counterPolling++;
         }
     }
 
@@ -467,7 +496,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
                 "DroidSansFallback.ttf");
         params.put("ass_default_font_path", assFont.getAbsolutePath());
         params.put("fflags", "nobuffer");
-        params.put("probesize", "512");
+        params.put("probesize", "5120");
         params.put("flush_packets", "1");
         if (isTCP){
             params.put("rtsp_transport", "tcp");
@@ -559,6 +588,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
 
     @Override
     public void deviceIsAlive() {
+        Log.d(TAG, "deviceIsAlive: ");
         onlineText.setText(R.string.online);
         repeatCheck(false);
         repeatPolling(true);
@@ -590,6 +620,22 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
         return url;
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (isRestart){
+            isRestart = false;
+            if (mMpegPlayer != null){
+                mMpegPlayer.stop();
+                repeatCheck(false);
+                repeatModbus(false);
+                repeatPolling(false);
+                repeatRedDot(false);
+                repeatCheck(true);
+            }
+        }
+    }
+
     private void sendCheckStorage(){
         String command = getDeviceURL();
         sString baseCommand, action;
@@ -597,7 +643,9 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
         Map<String, PListObject> targetCommand = fileCommandSet.get(0);
         baseCommand = (sString) targetCommand.get("Base Command");
         command = command + baseCommand.getValue();
+        Log.d(TAG, "sendCheckStorage: " + command);
         if (socketManager != null){
+            socketManager.setSocketInterface(this);
             socketManager.executeSendGetTask(command, SocketManager.CMDGET_ALIVE);
         }
     }
@@ -624,6 +672,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
             }
 
             if (con1.isConnected()){
+                isModbusAlive = false;
                 lock.lock();
                 while (!isModbusInPolling){
                     try {
@@ -658,6 +707,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
                         });
                         isModbusInPolling = false;
                         Log.d(TAG, "modbus doInBackground: not null res ");
+                        isModbusAlive = true;
 //                        Log.d(TAG, "modbus doInBackground: " + String.valueOf(registers[1].getValue()) + "temp: " + String.valueOf(registers[4].getValue()));
                     }else {
                         counterModbus++;
@@ -668,6 +718,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
                                 public void run() {
                                     progressBar.setVisibility(View.VISIBLE);
                                     setButtonEnable(false);
+                                    temperatureText.setText("N/A \u2103");
                                 }
                             });
                         }
@@ -797,6 +848,20 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
             ImageButton button = (ImageButton) thisView.findViewWithTag(String.valueOf(100 + i));
             button.setEnabled(enable);
         }
+    }
+
+    public void stopStreamFromSetting(){
+        Log.d(TAG, "stopStreamFromSetting: ");
+        if (mMpegPlayer != null){
+            mMpegPlayer.stop();
+        }
+        socketManager.setSocketInterface(this);
+        counterPolling = 0;
+        repeatModbus(false);
+        repeatPolling(false);
+        repeatRedDot(false);
+        repeatCheck(false);
+        isRestart = true;
     }
 
 }
