@@ -15,6 +15,6 @@
     <string name="online">ONLINE</string>
     <string name="offline">OFFLINE</string>
     <string name="temperature">N/A \u2103</string>
-    <string name="crash_toast_text">Crash detected! Send E-mail report to developer.</string>
+    <string name="crash_toast_text">Send E-mail report to developer !!</string>
 
 </resources>

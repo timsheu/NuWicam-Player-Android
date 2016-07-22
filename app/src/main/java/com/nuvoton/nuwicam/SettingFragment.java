@@ -23,6 +23,10 @@ import com.nuvoton.socketmanager.ReadConfigure;
 import com.nuvoton.socketmanager.SocketInterface;
 import com.nuvoton.socketmanager.SocketManager;
 
+import org.acra.ACRA;
+import org.acra.config.ACRAConfiguration;
+import org.acra.config.ACRAConfigurationException;
+import org.acra.config.ConfigurationBuilder;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -231,6 +235,21 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 listPreference = (ListPreference) getPreferenceManager().findPreference(key);
                 listPreference.setValue(option);
                 return;
+            case "Send Report":
+                option = sharedPreference.getString(key, "1");
+                if (option.equals("0")){
+                    if (isAdded()){
+                        sendReport();
+                    }
+                }else {
+                    return;
+                }
+                sharedPreference.edit().apply();
+                option = "1";
+                sharedPreference.edit().putString(key, option);
+                listPreference = (ListPreference) getPreferenceManager().findPreference(key);
+                listPreference.setValue(option);
+                return;
         }
         String commandTemp = new String(getDeviceURL());
         if (command.trim().equals(commandTemp)){
@@ -383,6 +402,10 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         commandType = SocketManager.CMDGET_ALL;
         socketManager.setCommandList(commandList);
         socketManager.executeSendGetTaskList(commandList, commandType);
+    }
+
+    public void sendReport(){
+        ACRA.getErrorReporter().handleException(new RuntimeException("Error"));
     }
 
 }

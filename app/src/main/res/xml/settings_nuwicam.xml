@@ -94,7 +94,16 @@
         <Preference
             android:key="APP Version Number"
             android:title="NuMaker NuWicam"
-            android:summary="APP Version 1.1.2"
+            android:summary="APP Version 1.1.3"
+            />
+        <ListPreference
+            android:key="Send Report"
+            android:title="Send Report"
+            android:summary="Click to send report through E-mail"
+            android:entries="@array/send_report"
+            android:entryValues="@array/send_report_value"
+            android:dialogTitle="Send Report"
+            android:defaultValue="1"
             />
 
 

@@ -145,6 +145,7 @@ public class ReadConfigure {
         editor.putString("SSID", "NuWicam");
         editor.putString("Password", "12345678");
         editor.putString("Show Password", "1");
+        editor.putString("Send Report", "1");
         Set<String> set = new LinkedHashSet<String>();
         if (cameraSerial == 0 || cameraSerial == 1){ // DVR and local IP
             editor.putString("Name", "LOCAL-IP");
