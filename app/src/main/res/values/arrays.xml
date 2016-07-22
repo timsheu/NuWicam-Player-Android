@@ -11,11 +11,13 @@
     <string-array name="resolution_list">
         <item>QVGA</item>
         <item>VGA</item>
+        <item>360p</item>
     </string-array>
 
     <string-array name="resolution_value_list">
         <item>0</item>
         <item>1</item>
+        <item>2</item>
     </string-array>
 
     <string-array name="bitrate_list">
@@ -23,10 +25,6 @@
         <item>2048</item>
         <item>3072</item>
         <item>4096</item>
-        <item>5120</item>
-        <item>6144</item>
-        <item>7168</item>
-        <item>8192</item>
 
     </string-array>
 
@@ -35,10 +33,6 @@
         <item>2048</item>
         <item>3072</item>
         <item>4096</item>
-        <item>5120</item>
-        <item>6144</item>
-        <item>7168</item>
-        <item>8192</item>
     </string-array>
 
 

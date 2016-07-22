@@ -135,8 +135,10 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 value = sharedPreference.getString(key, "0");
                 if (value.equals("0")){ // QVGA
                     command = command + baseCommand.getValue() + "&VINWIDTH=320&JPEGENCWIDTH=320&VINHEIGHT=240&JPEGENCHEIGHT=240";
-                }else{ // VGA
+                }else if (value.equals("1")){ // VGA
                     command = command + baseCommand.getValue() + "&VINWIDTH=640&JPEGENCWIDTH=640&VINHEIGHT=480&JPEGENCHEIGHT=480";
+                }else{
+                    command = command + baseCommand.getValue() + "&VINWIDTH=640&JPEGENCWIDTH=640&VINHEIGHT=360&JPEGENCHEIGHT=360";
                 }
                 commandType = SocketManager.CMDSET_UPDATE_VIDEO;
                 Log.d(TAG, "determineSettings: Resolution");
@@ -320,9 +322,9 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
             preference.edit().putString("Password", password);
             preference.edit().apply();
         }else if(category.equals("List Video Setting")){
-            String resolution = null;
+            String resolution = null, temp = null;
             try {
-                resolution = map.getString("VINWIDTH");
+                resolution = map.getString("VINHEIGHT");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -333,18 +335,20 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 e.printStackTrace();
             }
             int bitRateValue = Integer.valueOf(BitRate);
-            if (resolution.equals("320")){
-                resolution = "0"; // QVGA
+            if (resolution.compareTo("240") == 0){
+                temp = "0"; // QVGA
+            }else if (resolution.compareTo("480") == 0){
+                temp = "1"; // VGA
             }else {
-                resolution = "1"; //  VGA
+                temp = "2"; // 360p
             }
             BitRate = String.valueOf(bitRateValue);
-            preference.edit().putString("Resolution", resolution);
+            preference.edit().putString("Resolution", temp);
             preference.edit().putString("Bit Rate", BitRate);
             preference.edit().apply();
 
             ListPreference pref = (ListPreference)getPreferenceManager().findPreference("Resolution");
-            pref.setValue(resolution);
+            pref.setValue(temp);
 
             pref = (ListPreference)getPreferenceManager().findPreference("Bit Rate");
             pref.setValue(BitRate);

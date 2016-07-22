@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.IllegalFormatCodePointException;
 
 public class LivePage extends AppCompatActivity implements LiveFragment.OnHideBottomBarListener, SettingFragment.OnHideBottomBarListener {
     // live view callbacks
@@ -116,7 +117,7 @@ public class LivePage extends AppCompatActivity implements LiveFragment.OnHideBo
         }
         bottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_navigation);
         AHBottomNavigationItem liveItem = new AHBottomNavigationItem("Live", R.drawable.livetab);
-        AHBottomNavigationItem settingItem = new AHBottomNavigationItem("Setting", R.drawable.geartab);
+        final AHBottomNavigationItem settingItem = new AHBottomNavigationItem("Setting", R.drawable.geartab);
 
         bottomNavigationItems.add(liveItem);
         bottomNavigationItems.add(settingItem);
@@ -131,23 +132,26 @@ public class LivePage extends AppCompatActivity implements LiveFragment.OnHideBo
             @Override
             public boolean onTabSelected(int position, boolean wasSelected){
                 if (index == position) return true;
+                FragmentTransaction trans = fragmentManager.beginTransaction();
+                if (liveFragment.isAdded()) trans.hide(liveFragment);
+                if (settingFragment.isAdded()) trans.hide(settingFragment);
+
                 if (position == 0){
-                    FragmentTransaction trans = fragmentManager.beginTransaction();
                     if (!liveFragment.isAdded()){
-                        trans.hide(settingFragment).add(R.id.fragment_content, liveFragment).commit();
+                        trans.add(R.id.fragment_content, liveFragment);
                     }else{
-                        trans.hide(settingFragment).show(liveFragment).commit();
+                        trans.show(liveFragment);
                     }
                 }else{
-                    FragmentTransaction trans = fragmentManager.beginTransaction();
                     if (!settingFragment.isAdded()){
-                        trans.hide(liveFragment).add(R.id.fragment_content, settingFragment).commit();
+                        trans.add(R.id.fragment_content, settingFragment);
                     }else{
-                        trans.hide(liveFragment).show(settingFragment).commit();
+                        trans.show(settingFragment);
                     }
                 }
                 bottomNavigation.setNotification(0, position);
                 index = position;
+                trans.commit();
                 return true;
             }
         });

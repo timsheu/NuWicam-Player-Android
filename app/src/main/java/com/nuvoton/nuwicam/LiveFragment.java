@@ -14,6 +14,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -67,7 +68,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * A simple {@link Fragment} subclass.
  */
 public class LiveFragment extends Fragment implements OnClickListener, OnSeekBarChangeListener, FFmpegListener, SocketInterface{
-    private boolean isModbusInPolling = true, isModbusAlive = true, isRestart = false;
+    private boolean isModbusInPolling = true, isModbusAlive = true, isRestart = false, isModbusClosed = false;
     final Lock lock = new ReentrantLock();
     final Condition waitForWrite = lock.newCondition(), waitForRead = lock.newCondition();
     private WriteSingleRegisterRequest wreq;
@@ -119,12 +120,15 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
             case R.id.playButton:
                 Log.d(TAG, "onClick: play");
                 playButton.setEnabled(false);
-                if (isPlaying == false){
+                repeatModbus(false);
+                repeatRedDot(false);
+                repeatPolling(false);
+                if (!isPlaying){
                     isPlaying = true;
                     repeatCheck(true);
                 }else {
                     isPlaying = false;
-                    mMpegPlayer.stop();
+                    mMpegPlayer.pause();
                 }
                 break;
             case R.id.expandButton:
@@ -194,6 +198,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
                         if (isAdded()){
                             Toast.makeText(getActivity(), "Modbus is not alive, disable buttons", Toast.LENGTH_SHORT).show();
                             setButtonEnable(false);
+                            hideModbusButtons(true);
                             return;
                         }
                     }
@@ -237,6 +242,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
             });
             lightButtonList.add(button);
         }
+        hideModbusButtons(true);
     }
 
     @Override
@@ -262,12 +268,6 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
         repeatRedDot(false);
         repeatPolling(false);
         repeatModbus(false);
-        if (checkTimer != null) checkTimer.cancel();
-        if (pollingTimer != null) pollingTimer.cancel();
-        if (modbusTimer != null) modbusTimer.cancel();
-        if (onHideBottomBarListener != null){
-            onHideBottomBarListener.onEnableClick(false);
-        }
     }
 
     @Override
@@ -277,12 +277,6 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
         repeatRedDot(false);
         repeatPolling(false);
         repeatModbus(false);
-        if (checkTimer != null) checkTimer.cancel();
-        if (pollingTimer != null) pollingTimer.cancel();
-        if (modbusTimer != null) modbusTimer.cancel();
-        if (onHideBottomBarListener != null){
-            onHideBottomBarListener.onEnableClick(false);
-        }
     }
 
     @Override
@@ -450,7 +444,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
         Log.d(TAG, "repeatCheck: " + String.valueOf(option));
         if (option == true){
             checkTimer = new Timer(true);
-            checkTimer.schedule(new TimerSetDataSource(), 0, 5000);
+            checkTimer.schedule(new TimerSetDataSource(), 100, 5000);
         }else {
             if (checkTimer != null){
                 checkTimer.cancel();
@@ -496,8 +490,9 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
                 "DroidSansFallback.ttf");
         params.put("ass_default_font_path", assFont.getAbsolutePath());
         params.put("fflags", "nobuffer");
-        params.put("probesize", "5120");
-        params.put("flush_packets", "1");
+        params.put("probesize", "512");
+        params.put("analyzeduration", "0");
+        params.put("fpsprobesize", "-1");
         if (isTCP){
             params.put("rtsp_transport", "tcp");
         }
@@ -511,15 +506,22 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
     public void onFFDataSourceLoaded(FFmpegError err, FFmpegStreamInfo[] streams){
         if (err != null){
             String format = "Could not open stream";
-            Log.d(TAG, "onFFDataSourceLoaded: " + format);
+            Log.d(TAG, "onFFDataSourceLoaded: " + format + ", " + err.getMessage());
             progressBar.setVisibility(View.VISIBLE);
             onlineText.setText(R.string.offline);
             onlineText.setTextColor(0xFFFFFF);
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    repeatCheck(true);
+                }
+            }, 2000);
+        } else{
+            Log.d(TAG, "onFFDataSourceLoaded: loaded");
+            progressBar.setVisibility(View.GONE);
+            mMpegPlayer.resume();
+            repeatCheck(false);
         }
-        Log.d(TAG, "onFFDataSourceLoaded: loaded");
-        progressBar.setVisibility(View.GONE);
-        mMpegPlayer.resume();
-        repeatCheck(false);
     }
 
     public void onFFResume(NotPlayingException result){
@@ -573,7 +575,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
                 @Override
                 public void run() {
                     Log.d(TAG, "showToastMessage run: " + message);
-                    Toast.makeText(getActivity(), message, duration).show();
+//                    Toast.makeText(getActivity(), message, duration).show();
                 }
             });
 
@@ -623,16 +625,10 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
+        Log.d(TAG, "onHiddenChanged: " + String.valueOf(hidden) + " isRestart: " + String.valueOf(isRestart));
         if (isRestart){
             isRestart = false;
-            if (mMpegPlayer != null){
-                mMpegPlayer.stop();
-                repeatCheck(false);
-                repeatModbus(false);
-                repeatPolling(false);
-                repeatRedDot(false);
-                repeatCheck(true);
-            }
+            repeatCheck(true);
         }
     }
 
@@ -700,38 +696,41 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
                         getActivity().runOnUiThread(runnableContainer = new Runnable() {
                             @Override
                             public void run() {
+                                hideModbusButtons(false);
                                 setModbusUI(registers);
                                 setButtonEnable(true);
                                 progressBar.setVisibility(View.INVISIBLE);
                             }
                         });
                         isModbusInPolling = false;
-                        Log.d(TAG, "modbus doInBackground: not null res ");
                         isModbusAlive = true;
-//                        Log.d(TAG, "modbus doInBackground: " + String.valueOf(registers[1].getValue()) + "temp: " + String.valueOf(registers[4].getValue()));
+                        isModbusClosed = true;
                     }else {
-                        counterModbus++;
                         Log.d(TAG, "modbus doInBackground: null res");
                         if (isAdded()){
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    progressBar.setVisibility(View.VISIBLE);
                                     setButtonEnable(false);
                                     temperatureText.setText("N/A \u2103");
                                 }
                             });
                         }
-                        if (counterModbus < 3 ){
-                            showToastMessage("Waiting for Modbus response...", Toast.LENGTH_SHORT);
-                        }else{
-                            showToastMessage("Reset Modbus connection.", Toast.LENGTH_LONG);
-                            counterModbus = 0;
-                            repeatModbus(false);
-                            repeatModbus(true);
+                        if (!isModbusClosed){
+                            if (counterModbus < 3 ){
+                                counterModbus++;
+                            }else{
+                                repeatModbus(false);
+                                if (isAdded()){
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            hideModbusButtons(true);
+                                        }
+                                    });
+                                }
+                            }
                         }
-
-
                     }
                     waitForRead.signal();
                     lock.unlock();
@@ -755,6 +754,21 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
             }
         }
 
+    }
+
+    private void hideModbusButtons(boolean isHide){
+        int visi = View.VISIBLE;
+        if (isHide){
+            visi = View.INVISIBLE;
+        }
+        if (temperatureText != null){
+            temperatureText.setVisibility(visi);
+
+        }
+        for (int i=0; i<6; i++){
+            ImageButton button = lightButtonList.get(i);
+            button.setVisibility(visi);
+        }
     }
 
     private void setModbusUI(Register [] registers){
