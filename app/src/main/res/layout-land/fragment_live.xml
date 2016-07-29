@@ -109,7 +109,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_alignBottom="@+id/videoView"
+        android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/videoView"
         android:layout_alignLeft="@+id/videoView"
         android:background="#036D6E"

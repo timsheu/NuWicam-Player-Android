@@ -170,7 +170,28 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
         return fragment;
     }
 
+    public void setupFFMPEGSurface(){
+        if (isAdded()) {
+            mVideoView = (SurfaceView) getActivity().findViewById(R.id.videoView);
+            mVideoView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    Log.d(TAG, "onTouch: ");
+                    if (!isHide){
+                        isHide = true;
+                    }else {
+                        isHide = false;
+                    }
+                    onHideBottomBarListener.onHideBottomBar(isHide);
+                    return false;
+                }
+            });
+            mMpegPlayer = new FFmpegPlayer((FFmpegDisplay) mVideoView, this);
+        }
+    }
+
     public void registerUI(){
+
         playButton = (ImageButton) thisView.findViewById(R.id.playButton);
         playButton.setOnClickListener(this);
         playButton.setEnabled(false);
@@ -282,25 +303,10 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-        if (!isAdded()) return;
-        mVideoView = (SurfaceView) getActivity().findViewById(R.id.videoView);
-        mVideoView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                Log.d(TAG, "onTouch: ");
-                if (!isHide){
-                    isHide = true;
-                }else {
-                    isHide = false;
-                }
-                onHideBottomBarListener.onHideBottomBar(isHide);
-                return false;
-            }
-        });
-        mMpegPlayer = new FFmpegPlayer((FFmpegDisplay) mVideoView, this);
-        if (!isAdded()) return;
-        configure = ReadConfigure.getInstance(getActivity().getApplicationContext());
-
+        setupFFMPEGSurface();
+        if (isAdded()) {
+            configure = ReadConfigure.getInstance(getActivity().getApplicationContext());
+        }
     }
 
     @Override
@@ -477,6 +483,10 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
 
 
     private void setDataSource() {
+        String cameraName = "Setup Camera " + cameraSerial;
+        SharedPreferences preference = getActivity().getSharedPreferences(cameraName, Context.MODE_PRIVATE);
+        String resolution = preference.getString("Resolution", "0");
+
         progressBar.post(new Runnable() {
             @Override
             public void run() {
@@ -489,16 +499,16 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
         File assFont = new File(Environment.getExternalStorageDirectory(),
                 "DroidSansFallback.ttf");
         params.put("ass_default_font_path", assFont.getAbsolutePath());
+        params.put("probesize", "5120");
+        params.put("max_delay", "0");
         params.put("fflags", "nobuffer");
-        params.put("probesize", "512");
-        params.put("analyzeduration", "0");
-        params.put("fpsprobesize", "-1");
+        params.put("flush_packets", "1");
         if (isTCP){
             params.put("rtsp_transport", "tcp");
         }
         mMpegPlayer.setMpegListener(this);
         mMpegPlayer.setDataSource(localURL, params, FFmpegPlayer.UNKNOWN_STREAM, mAudioStreamNo,
-                mSubtitleStreamNo);
+                mSubtitleStreamNo, resolution);
     }
 
     // FFMPEG interface implementation
@@ -628,7 +638,9 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
         Log.d(TAG, "onHiddenChanged: " + String.valueOf(hidden) + " isRestart: " + String.valueOf(isRestart));
         if (isRestart){
             isRestart = false;
-            repeatCheck(true);
+            if (!hidden){
+                repeatCheck(true);
+            }
         }
     }
 
