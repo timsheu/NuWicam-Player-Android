@@ -32,6 +32,7 @@ import com.appunite.ffmpeg.FFmpegPlayer;
 import com.appunite.ffmpeg.FFmpegListener;
 import com.appunite.ffmpeg.FFmpegDisplay;
 import com.appunite.ffmpeg.FFmpegStreamInfo;
+import com.appunite.ffmpeg.FFmpegSurfaceView;
 import com.appunite.ffmpeg.NotPlayingException;
 import com.longevitysoft.android.xml.plist.domain.PListObject;
 import com.longevitysoft.android.xml.plist.domain.sString;
@@ -100,7 +101,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
     private int mCurrentTimeS;
     private View thisView;
     private FFmpegPlayer mMpegPlayer;
-    private SurfaceView mVideoView;
+    private FFmpegSurfaceView mVideoView;
     private SeekBar seekBar;
     private ImageButton snapshotButton, playButton, expandButton;
     private int mAudioStreamNo = FFmpegPlayer.UNKNOWN_STREAM;
@@ -172,7 +173,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
 
     public void setupFFMPEGSurface(){
         if (isAdded()) {
-            mVideoView = (SurfaceView) getActivity().findViewById(R.id.videoView);
+            mVideoView = (FFmpegSurfaceView) getActivity().findViewById(R.id.videoView);
             mVideoView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -305,7 +306,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
         super.onActivityCreated(savedInstanceState);
         setupFFMPEGSurface();
         if (isAdded()) {
-            configure = ReadConfigure.getInstance(getActivity().getApplicationContext());
+            configure = ReadConfigure.getInstance(getActivity().getApplicationContext(), false);
         }
     }
 
@@ -318,7 +319,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
         populateViewForOrientation(inflater, (ViewGroup) getView());
         registerUI();
         determineOrientation();
-        mVideoView = (SurfaceView) getView().findViewById(R.id.videoView);
+        mVideoView = (FFmpegSurfaceView) getView().findViewById(R.id.videoView);
         mVideoView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -486,6 +487,7 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
         String cameraName = "Setup Camera " + cameraSerial;
         SharedPreferences preference = getActivity().getSharedPreferences(cameraName, Context.MODE_PRIVATE);
         String resolution = preference.getString("Resolution", "0");
+        mVideoView.setResolution(resolution);
 
         progressBar.post(new Runnable() {
             @Override
@@ -889,6 +891,11 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
         repeatCheck(false);
         isRestart = true;
     }
+	
+	public void setResolution(String resolution){
+        mVideoView.setResolution(resolution);
+    }
+
 
 }
 

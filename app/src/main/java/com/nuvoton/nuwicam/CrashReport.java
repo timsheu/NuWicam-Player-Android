@@ -2,6 +2,7 @@ package com.nuvoton.nuwicam;
 
 import android.app.Application;
 import android.content.Context;
+import android.widget.Toast;
 
 import org.acra.ACRA;
 import org.acra.ReportField;
@@ -26,15 +27,19 @@ import org.acra.config.ConfigurationBuilder;
                 ReportField.CUSTOM_DATA,
                 ReportField.STACK_TRACE,
                 ReportField.LOGCAT
-        },
-        mode = ReportingInteractionMode.TOAST,
-        resToastText = R.string.crash_toast_text
+        }
+//        mode = ReportingInteractionMode.TOAST
 )
 
 public class CrashReport extends Application {
+    private static final String TAG = "CrashReport";
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
+        int toastTextID = R.string.crash_toast_text;
+        if (ACRA.isInitialised()){
+            Toast.makeText(this, toastTextID, Toast.LENGTH_LONG).show();
+        }
         ACRA.init(this);
     }
 }

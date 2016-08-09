@@ -35,7 +35,7 @@ public class SocketManager {
     public static final String CMDSET_UPDATE_VIDEO="5";
     public static final String CMDGET_ALL="6";
     public static final String CMDGET_ALIVE="7";
-
+    public static final String CMDSET_RECORD="16";
 
 
     Timer timer = new Timer();

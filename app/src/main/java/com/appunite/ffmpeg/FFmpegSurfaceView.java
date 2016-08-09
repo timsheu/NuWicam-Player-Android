@@ -98,11 +98,15 @@ public class FFmpegSurfaceView extends SurfaceView implements FFmpegDisplay,
 		float width = (MeasureSpec.getSize(widthMeasureSpec) - getPaddingLeft() - getPaddingRight());
 		float height = (MeasureSpec.getSize(heightMeasureSpec) - getPaddingTop() - getPaddingBottom());
         Log.d(TAG, "onMeasure: " + resolution + "width:" + String.valueOf(width) + " height: " + String.valueOf(height));
-		if (widthMode == MeasureSpec.EXACTLY){
-            height = (width / ratio);
-			heightMeasureSpec = MeasureSpec.makeMeasureSpec((int)height, MeasureSpec.EXACTLY);
+		if (height < (width/ratio)){
+			width = height*ratio;
+		}else{
+			height = (width / ratio);
 		}
-        Log.d(TAG, "onMeasure: " + resolution + "width:" + String.valueOf(width) + " height: " + String.valueOf(height));
+		widthMeasureSpec = MeasureSpec.makeMeasureSpec((int)width, MeasureSpec.EXACTLY);
+		heightMeasureSpec = MeasureSpec.makeMeasureSpec((int)height, MeasureSpec.EXACTLY);
+		getHolder().setFixedSize((int)width, (int)height);
+		Log.d(TAG, "onMeasure: " + resolution + "width:" + String.valueOf(width) + " height: " + String.valueOf(height));
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 	}
 

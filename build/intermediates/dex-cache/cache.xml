@@ -33,7 +33,7 @@
         jar="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
         jumboMode="true"
         revision="23.0.3"
-        sha1="775d8242ba2b643c8806c938d9cb5de67825cc33">
+        sha1="67fa75dd807e4866a39056ae8817f7079f826640">
         <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/debug/instant-run_91b37389897ba118ff44119d12882e73acbed131.jar" />
     </item>
     <item
@@ -54,7 +54,7 @@
         jar="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         revision="23.0.3"
-        sha1="5e10dc1684281dcfde8ca3ea170b618ea89f035f">
+        sha1="7fd95c72936660b3a57a7592bad4c216f1bba143">
         <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/debug/instant-run-bootstrap_3be10be5190a3423fa6fece9a3f402bf891d2dd6.jar" />
     </item>
     <item
@@ -72,18 +72,18 @@
         <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-23.4.0_cc276694942af201c517f5e1f7750c534f26129f.jar" />
     </item>
     <item
-        jar="/Users/timsheu/Documents/AndroidSDK/sdk/extras/android/m2repository/com/android/support/support-annotations/23.4.0/support-annotations-23.4.0.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="ffbe55fdb2bb456b1485831706a9eac3300bb6b8">
-        <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/debug/support-annotations-23.4.0_d8d82732cdd15bd379af45e5ce3166530e49f13c.jar" />
-    </item>
-    <item
         jar="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/exploded-aar/com.android.support/percent/23.4.0/jars/classes.jar"
         jumboMode="true"
         revision="23.0.3"
         sha1="91c2541305eec5a688f3a60529d974e48f77d760">
         <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/debug/com.android.support-percent-23.4.0_54d1b2d7125e858488f460982c7db72fd0db1af5.jar" />
+    </item>
+    <item
+        jar="/Users/timsheu/Documents/AndroidSDK/sdk/extras/android/m2repository/com/android/support/support-annotations/23.4.0/support-annotations-23.4.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="ffbe55fdb2bb456b1485831706a9eac3300bb6b8">
+        <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/debug/support-annotations-23.4.0_d8d82732cdd15bd379af45e5ce3166530e49f13c.jar" />
     </item>
     <item
         jar="/Users/timsheu/.gradle/caches/modules-2/files-2.1/org.rxtx/rxtx/2.1.7/e96c946be1e6537378fd532d2742b523df2725a4/rxtx-2.1.7.jar"

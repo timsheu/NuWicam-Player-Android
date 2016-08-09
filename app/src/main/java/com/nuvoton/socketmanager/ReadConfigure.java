@@ -36,13 +36,13 @@ public class ReadConfigure {
     private ReadConfigure(){
         Log.d(TAG, "ReadConfigure: create");
     }
-    public static ReadConfigure getInstance(Context context){
+    public static ReadConfigure getInstance(Context context, Boolean clear){
         Log.d(TAG, "getInstance: ");
         contextLocal = context;
 //        for (int i=0; i<5; i++){
         int i = 5; // hard coded for NuWicam Player
             if (isSharedpreferenceCreated(i) == false) {
-                initSharedPreference(i, true);
+                initSharedPreference(i, clear);
             }
 //        }
         new Thread(new Runnable() {
@@ -125,9 +125,10 @@ public class ReadConfigure {
         Log.d(TAG, "initSharedPreference: " + preferenceName);
         SharedPreferences preferences = contextLocal.getSharedPreferences(preferenceName, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        if (clear == true){
+        if (clear){
             editor.clear();
         }
+        editor.putString("Version", "1.1.6");
         editor.putBoolean("first created", true);
         editor.putString("Adaptive", "0");
         editor.putString("Fixed Quality", "0");
@@ -144,35 +145,32 @@ public class ReadConfigure {
         editor.putBoolean("Device Mic", true);
         editor.putString("SSID", "NuWicam");
         editor.putString("Password", "12345678");
-        editor.putString("Show Password", "1");
         editor.putString("Send Report", "1");
-        Set<String> set = new LinkedHashSet<String>();
         if (cameraSerial == 0 || cameraSerial == 1){ // DVR and local IP
             editor.putString("Name", "LOCAL-IP");
             editor.putString("URL", "rtsp://192.168.100.1/cam1/h264");
-            set.add("rtsp://192.168.100.1/cam1/h264");
-            set.add("rtsp://192.168.100.1/cam1/mpeg4");
+            editor.putString("History 0", "rtsp://192.168.100.1/cam1/h264");
+            editor.putString("History 1", "rtsp://192.168.100.1/cam1/mpeg4");
         }else if (cameraSerial == 2){ //
             editor.putString("Name", "DEMO-IP");
             editor.putString("URL", "rtsp://114.35.206.240/cam1/h264");
-            set.add("rtsp://114.35.206.240/cam1/h264");
-            set.add("rtsp://114.35.206.240/cam1/mpeg4");
+            editor.putString("History 0", "rtsp://114.35.206.240/cam1/h264");
+            editor.putString("History 1", "rtsp://114.35.206.240/cam1/mpeg4");
         }else if (cameraSerial == 3){
             editor.putString("Name", "DEMO-NO-IP");
             editor.putString("URL", "rtsp://nuvoton.no-ip.biz/cam1/h264");
-            set.add("rtsp://nuvoton.no-ip.biz/cam1/h264");
-            set.add("rtsp://nuvoton.no-ip.biz/cam1/mpeg4");
+            editor.putString("History 0", "rtsp://nuvoton.no-ip.biz/cam1/h264");
+            editor.putString("History 1", "rtsp://nuvoton.no-ip.biz/cam1/mpeg4");
         }else if (cameraSerial == 4){
             editor.putString("Name", "DEMO-NO-IP");
             editor.putString("URL", "rtsp://nuvoton.no-ip.biz/cam1/h264");
-            set.add("rtsp://nuvoton.no-ip.biz/cam1/h264");
-            set.add("rtsp://nuvoton.no-ip.biz/cam1/mpeg4");
+            editor.putString("History 0", "rtsp://nuvoton.no-ip.biz/cam1/h264");
+            editor.putString("History 1", "rtsp://nuvoton.no-ip.biz/cam1/mpeg4");
         }else if (cameraSerial == 5){
             editor.putString("Name", "LOCAL-IP");
             editor.putString("URL", "rtsp://192.168.100.1/cam1/mpeg4");
-            set.add("rtsp://nuvoton.no-ip.biz/cam1/mpeg4");
+            editor.putString("History 0", "rtsp://192.168.100.1/cam1/mpeg4");
         }
-        editor.putStringSet("History", set);
         editor.commit();
     }
 

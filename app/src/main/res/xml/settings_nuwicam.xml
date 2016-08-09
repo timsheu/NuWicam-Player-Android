@@ -16,8 +16,12 @@
             android:key="URL"
             android:title="Camera URL"
             android:summary="Click to edit camera URL address."
-            android:defaultValue="rtsp://192.168.100.1/cam1/h264"
-            />
+            android:defaultValue="rtsp://192.168.100.1/cam1/h264"/>
+        <Preference
+            android:key="History"
+            android:title="History"
+            android:summary="%s"/>
+
         <ListPreference
             android:key="Resolution"
             android:title="Resolution"
@@ -94,7 +98,7 @@
         <Preference
             android:key="APP Version Number"
             android:title="NuMaker NuWicam"
-            android:summary="APP Version 1.1.4"
+            android:summary="APP Version 1.1.6"
             />
         <ListPreference
             android:key="Send Report"

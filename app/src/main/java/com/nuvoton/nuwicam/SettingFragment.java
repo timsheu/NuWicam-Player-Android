@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceScreen;
 import android.support.v4.app.Fragment;
 import android.preference.Preference;
 import android.text.InputType;
@@ -15,10 +16,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.widget.Toast;
 
 import com.longevitysoft.android.xml.plist.domain.PListObject;
 import com.longevitysoft.android.xml.plist.domain.sString;
+import com.nuvoton.socketmanager.CustomDialogFragment;
 import com.nuvoton.socketmanager.ReadConfigure;
 import com.nuvoton.socketmanager.SocketInterface;
 import com.nuvoton.socketmanager.SocketManager;
@@ -31,12 +34,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SettingFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener, SocketInterface{
+public class SettingFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener, SocketInterface, CustomDialogFragment.DialogFragmentInterface{
     private ReadConfigure configure;
     private SocketManager socketManager;
     private String key; 
@@ -44,12 +48,31 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     private String TAG = "SettingFragment";
     private ArrayList<Preference> settingArrayList;
     OnHideBottomBarListener onHideBottomBarListener;
-
+    private LinkedList<String> historyList = null;
     public static SettingFragment newInstance(Bundle bundle){
         platform = bundle.getString("Platform");
         cameraSerial = bundle.getString("CameraSerial");
         SettingFragment fragment = new SettingFragment();
         return fragment;
+    }
+
+    @Override
+    public void chooseHistory(CustomDialogFragment fragment, int index) {
+        getFragmentManager().beginTransaction().remove(fragment).commit();
+        String temp = new String(historyList.get(index));
+        historyList.addFirst(temp);
+        historyList.removeLast();
+        updateHistoryList();
+    }
+
+    @Override
+    public void sendOkay(String category) {
+        if (category.compareTo("Reboot")  == 0){
+
+        }else if(category.compareTo("Send Report") == 0){
+            sendReport();
+        }
+        Log.d(TAG, "sendOkay: setting fragment");
     }
 
     public interface OnHideBottomBarListener{
@@ -76,7 +99,8 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
             addPreferencesFromResource(R.xml.settings_nuwicam);
         }
         if (!isAdded()) return;
-        configure = ReadConfigure.getInstance(getActivity().getApplicationContext());
+        configure = ReadConfigure.getInstance(getActivity().getApplicationContext(), false);
+        getHistoryList();
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -113,6 +137,33 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
             onHideBottomBarListener.onEnableClick(false);
         }
     }
+	
+    @Override
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        String key = preference.getKey();
+        Log.d(TAG, "onPreferenceTreeClick: " + key);
+        CustomDialogFragment dialog = new CustomDialogFragment();
+        dialog.setInterface(this);
+        if (key.compareTo("Reboot") == 0){
+            dialog.setLabel("Reboot");
+            dialog.setContent("Click OK to reboot device!");
+            dialog.show(getFragmentManager(), "Reboot");
+        }else if (key.compareTo("Send Report")  == 0){
+            dialog.setLabel("Send Report");
+            dialog.setContent("Click OK to send E-mail report!");
+            dialog.show(getFragmentManager(), "Send Report");
+        }else if (key.compareTo("History") == 0){
+            dialog.setType("Spinner");
+            dialog.setLabel("History");
+            dialog.setHistoryData(historyList);
+            dialog.show(getFragmentManager(), "History");
+        }else if (key.compareTo("URL") == 0){
+            EditTextPreference editTextPreference = (EditTextPreference) preference;
+            Log.d(TAG, "onPreferenceTreeClick: " + editTextPreference.getEditText().getText());
+            editTextPreference.getEditText().setText(historyList.get(0));
+        }
+        return super.onPreferenceTreeClick(preferenceScreen, preference);
+    }
 
     @Override
     public void onStart() {
@@ -145,7 +196,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                     command = command + baseCommand.getValue() + "&VINWIDTH=640&JPEGENCWIDTH=640&VINHEIGHT=360&JPEGENCHEIGHT=360";
                 }
                 commandType = SocketManager.CMDSET_UPDATE_VIDEO;
-                Log.d(TAG, "determineSettings: Resolution");
+                Log.d(TAG, "determineSettings: Resolution" + command);
                 break;
             case "Bit Rate":
                 videoCommandSet = configure.videoCommandSet;
@@ -222,6 +273,13 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 listPreference.setValue(option);
                 onHideBottomBarListener.restartStream();
                 Log.d(TAG, "determineSettings: " + command);
+                return;
+            case "URL":
+                String url = sharedPreference.getString("URL", "");
+                historyList.removeLast();
+                historyList.addFirst(url);
+                Preference preference = getPreferenceManager().findPreference("History");
+                preference.setSummary(url);
                 return;
             case "Show Password":
                 option = sharedPreference.getString(key, "1");
@@ -405,7 +463,36 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     }
 
     public void sendReport(){
+        if (isAdded()){
+            Toast.makeText(getActivity(), R.string.email_toast_text, Toast.LENGTH_SHORT).show();
+        }
         ACRA.getErrorReporter().handleException(new RuntimeException("Error"));
     }
 
+    private void getHistoryList(){
+        String cameraName = "Setup Camera " + cameraSerial;
+        SharedPreferences preference = getActivity().getApplicationContext().getSharedPreferences(cameraName, Context.MODE_PRIVATE);
+        historyList = new LinkedList<>();
+        for (int i=0; i<5; i++){
+            String temp = preference.getString("History " + i, "-");
+            historyList.add(temp);
+        }
+        Preference preference1 = getPreferenceManager().findPreference("History");
+        preference1.setSummary(historyList.get(0));
+    }
+
+    private void updateHistoryList(){
+        String cameraName = "Setup Camera " + cameraSerial;
+        SharedPreferences preference = getActivity().getApplicationContext().getSharedPreferences(cameraName, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preference.edit();
+//        Log.d(TAG, "updateHistoryList: " + preference.getString("URL", ""));
+        for (int i=0; i<5; i++){
+            editor.putString("History " + i, historyList.get(i));
+        }
+        editor.putString("URL", historyList.get(0));
+        editor.commit();
+        Preference preference1 = getPreferenceManager().findPreference("History");
+        preference1.setSummary(historyList.get(0));
+//        Log.d(TAG, "updateHistoryList: " + preference.getString("URL", ""));
+    }
 }
