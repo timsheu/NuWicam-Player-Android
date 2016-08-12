@@ -57,7 +57,7 @@ public class FFmpegSurfaceView extends SurfaceView implements FFmpegDisplay,
 	public void setMpegPlayer(FFmpegPlayer fFmpegPlayer, String resolution) {
 		if (mMpegPlayer != null)
 			throw new RuntimeException(
-					"setMpegPlayer could not be called twice");
+					"setMpegPlayer could not be called twice ");
 
 		this.mMpegPlayer = fFmpegPlayer;
         this.resolution = resolution;
