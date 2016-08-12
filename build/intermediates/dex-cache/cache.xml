@@ -33,7 +33,7 @@
         jar="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
         jumboMode="true"
         revision="23.0.3"
-        sha1="67fa75dd807e4866a39056ae8817f7079f826640">
+        sha1="6713aab3ee2e0e8c16910c3a9cba34cf3cc5fa28">
         <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/debug/instant-run_91b37389897ba118ff44119d12882e73acbed131.jar" />
     </item>
     <item
@@ -54,7 +54,7 @@
         jar="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         revision="23.0.3"
-        sha1="7fd95c72936660b3a57a7592bad4c216f1bba143">
+        sha1="7a5a7a0b78e7b5022e0892eccad18fe0da6e451b">
         <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/debug/instant-run-bootstrap_3be10be5190a3423fa6fece9a3f402bf891d2dd6.jar" />
     </item>
     <item
