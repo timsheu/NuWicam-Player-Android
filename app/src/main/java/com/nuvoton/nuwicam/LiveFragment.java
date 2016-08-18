@@ -242,21 +242,21 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
                     light = lightFinalValue;
                     if (lightIndex == 0 || lightIndex == 1){
                         if (lightValue == 0){
-                            button.setImageResource(R.drawable.recordflashon);
-                        }else {
-                            button.setImageResource(R.drawable.recordflashoff);
-                        }
-                    }else if (lightIndex == 2 || lightIndex == 3){
-                        if (lightValue == 0){
                             button.setImageResource(R.drawable.lighton);
                         }else {
                             button.setImageResource(R.drawable.lightoff);
                         }
+                    }else if (lightIndex == 2 || lightIndex == 3){
+                        if (lightValue == 0){
+                            button.setImageResource(R.drawable.yellowon);
+                        }else {
+                            button.setImageResource(R.drawable.yellowoff);
+                        }
                     }else{
                         if (lightValue == 0){
-                            button.setImageResource(R.drawable.lightblueon);
+                            button.setImageResource(R.drawable.recordflashon);
                         }else {
-                            button.setImageResource(R.drawable.lightblueoff);
+                            button.setImageResource(R.drawable.recordflashoff);
                         }
                     }
                     new SetLightValueTask().execute("");
@@ -793,21 +793,21 @@ public class LiveFragment extends Fragment implements OnClickListener, OnSeekBar
             lightArray [i] = lightValue;
             if (i == 0 || i== 1){
                 if (lightValue == 0){
-                    button.setImageResource(R.drawable.recordflashon);
-                }else {
-                    button.setImageResource(R.drawable.recordflashoff);
-                }
-            }else if (i == 2 || i == 3){
-                if (lightValue == 0){
                     button.setImageResource(R.drawable.lighton);
                 }else {
                     button.setImageResource(R.drawable.lightoff);
                 }
+            }else if (i == 2 || i == 3){
+                if (lightValue == 0){
+                    button.setImageResource(R.drawable.yellowon);
+                }else {
+                    button.setImageResource(R.drawable.yellowoff);
+                }
             }else{
                 if (lightValue == 0){
-                    button.setImageResource(R.drawable.lightblueon);
+                    button.setImageResource(R.drawable.recordflashon);
                 }else {
-                    button.setImageResource(R.drawable.lightblueoff);
+                    button.setImageResource(R.drawable.recordflashoff);
                 }
 
             }

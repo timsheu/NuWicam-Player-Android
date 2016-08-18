@@ -3,108 +3,94 @@
 
     <item
         jar="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/libs/internal_impl-23.4.0.jar"
-        jumboMode="true"
+        jumboMode="false"
         revision="23.0.3"
         sha1="ea3c07504d2c8f4b13aa17c45c1b68ed9c1c3674">
-        <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/debug/internal_impl-23.4.0_ba3821563119ec729450c5a095a558363bc1e2ae.jar" />
-    </item>
-    <item
-        jar="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.4.0/jars/classes.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="ec75036c3c52e451d0cde50a5aedaf5fd32354a0">
-        <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/debug/com.android.support-recyclerview-v7-23.4.0_bea1d7220ef5682a496f7decc92d95bc36d65c9c.jar" />
-    </item>
-    <item
-        jar="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/exploded-aar/com.android.support/preference-v7/23.4.0/jars/classes.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="b954d8588de65c67c1ec482678620845bbb5f737">
-        <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/debug/com.android.support-preference-v7-23.4.0_3076bdd5c24fedaaa18dccfc7a97adad1fbb9d9d.jar" />
-    </item>
-    <item
-        jar="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/exploded-aar/info.hoang8f/android-segmented/1.0.6/jars/classes.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="692a913dff3246e0cc5369c2508f5970ecfeca01">
-        <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/debug/info.hoang8f-android-segmented-1.0.6_7eb502295a414ae065eb1d818e66ba4a9cc97941.jar" />
-    </item>
-    <item
-        jar="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="6713aab3ee2e0e8c16910c3a9cba34cf3cc5fa28">
-        <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/debug/instant-run_91b37389897ba118ff44119d12882e73acbed131.jar" />
-    </item>
-    <item
-        jar="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/exploded-aar/ch.acra/acra/4.9.0/jars/classes.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="d03cbe00a6703cfa62ae868707af59d41aff2140">
-        <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/debug/ch.acra-acra-4.9.0_fd003ec9553efcc82139b2acad93446655ff942d.jar" />
-    </item>
-    <item
-        jar="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/jars/classes.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="de4db3785756bfb0915a9f59a9b3f2fea7407be4">
-        <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-23.4.0_792fe7d33021f18159f22f35844995300f3cc5e6.jar" />
-    </item>
-    <item
-        jar="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="7a5a7a0b78e7b5022e0892eccad18fe0da6e451b">
-        <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/debug/instant-run-bootstrap_3be10be5190a3423fa6fece9a3f402bf891d2dd6.jar" />
-    </item>
-    <item
-        jar="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/jars/classes.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="548f06de403a9409f00554b3ee12a9fdea0e236c">
-        <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.4.0_bfd481913d2bfa4cb04570e44c47aaab13aa5ea4.jar" />
-    </item>
-    <item
-        jar="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/classes.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
-        <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-23.4.0_cc276694942af201c517f5e1f7750c534f26129f.jar" />
-    </item>
-    <item
-        jar="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/exploded-aar/com.android.support/percent/23.4.0/jars/classes.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="91c2541305eec5a688f3a60529d974e48f77d760">
-        <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/debug/com.android.support-percent-23.4.0_54d1b2d7125e858488f460982c7db72fd0db1af5.jar" />
-    </item>
-    <item
-        jar="/Users/timsheu/Documents/AndroidSDK/sdk/extras/android/m2repository/com/android/support/support-annotations/23.4.0/support-annotations-23.4.0.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="ffbe55fdb2bb456b1485831706a9eac3300bb6b8">
-        <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/debug/support-annotations-23.4.0_d8d82732cdd15bd379af45e5ce3166530e49f13c.jar" />
-    </item>
-    <item
-        jar="/Users/timsheu/.gradle/caches/modules-2/files-2.1/org.rxtx/rxtx/2.1.7/e96c946be1e6537378fd532d2742b523df2725a4/rxtx-2.1.7.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="e96c946be1e6537378fd532d2742b523df2725a4">
-        <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/debug/rxtx-2.1.7_a4612b5ae593e73ff034389d9b025761db4c70ca.jar" />
-    </item>
-    <item
-        jar="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/exploded-aar/com.android.support/design/23.1.1/jars/classes.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="379471b2bd17d9737c050345c08e8c7d16589784">
-        <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/debug/com.android.support-design-23.1.1_c9d1dc80fd035b2c15b856141c59f239f77dedc2.jar" />
+        <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/release/internal_impl-23.4.0_ba3821563119ec729450c5a095a558363bc1e2ae.jar" />
     </item>
     <item
         jar="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/jars/classes.jar"
-        jumboMode="true"
+        jumboMode="false"
         revision="23.0.3"
         sha1="c2c594cace5d83a3227b2b6e658ecbfd586d3ed9">
-        <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-23.4.0_9e1a37d29579f59e3d0c30cda99c9bf0326a3e89.jar" />
+        <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/release/com.android.support-support-vector-drawable-23.4.0_9e1a37d29579f59e3d0c30cda99c9bf0326a3e89.jar" />
+    </item>
+    <item
+        jar="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/exploded-aar/com.android.support/preference-v7/23.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="b954d8588de65c67c1ec482678620845bbb5f737">
+        <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/release/com.android.support-preference-v7-23.4.0_3076bdd5c24fedaaa18dccfc7a97adad1fbb9d9d.jar" />
+    </item>
+    <item
+        jar="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/exploded-aar/info.hoang8f/android-segmented/1.0.6/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="692a913dff3246e0cc5369c2508f5970ecfeca01">
+        <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/release/info.hoang8f-android-segmented-1.0.6_7eb502295a414ae065eb1d818e66ba4a9cc97941.jar" />
+    </item>
+    <item
+        jar="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="de4db3785756bfb0915a9f59a9b3f2fea7407be4">
+        <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/release/com.android.support-animated-vector-drawable-23.4.0_792fe7d33021f18159f22f35844995300f3cc5e6.jar" />
+    </item>
+    <item
+        jar="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
+        <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/release/com.android.support-support-v4-23.4.0_cc276694942af201c517f5e1f7750c534f26129f.jar" />
+    </item>
+    <item
+        jar="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="548f06de403a9409f00554b3ee12a9fdea0e236c">
+        <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/release/com.android.support-appcompat-v7-23.4.0_bfd481913d2bfa4cb04570e44c47aaab13aa5ea4.jar" />
+    </item>
+    <item
+        jar="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/exploded-aar/ch.acra/acra/4.9.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="d03cbe00a6703cfa62ae868707af59d41aff2140">
+        <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/release/ch.acra-acra-4.9.0_fd003ec9553efcc82139b2acad93446655ff942d.jar" />
+    </item>
+    <item
+        jar="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/exploded-aar/com.android.support/percent/23.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="91c2541305eec5a688f3a60529d974e48f77d760">
+        <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/release/com.android.support-percent-23.4.0_54d1b2d7125e858488f460982c7db72fd0db1af5.jar" />
+    </item>
+    <item
+        jar="/Users/timsheu/Documents/AndroidSDK/sdk/extras/android/m2repository/com/android/support/support-annotations/23.4.0/support-annotations-23.4.0.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="ffbe55fdb2bb456b1485831706a9eac3300bb6b8">
+        <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/release/support-annotations-23.4.0_d8d82732cdd15bd379af45e5ce3166530e49f13c.jar" />
+    </item>
+    <item
+        jar="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/exploded-aar/com.android.support/design/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="379471b2bd17d9737c050345c08e8c7d16589784">
+        <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/release/com.android.support-design-23.1.1_c9d1dc80fd035b2c15b856141c59f239f77dedc2.jar" />
+    </item>
+    <item
+        jar="/Users/timsheu/.gradle/caches/modules-2/files-2.1/org.rxtx/rxtx/2.1.7/e96c946be1e6537378fd532d2742b523df2725a4/rxtx-2.1.7.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="e96c946be1e6537378fd532d2742b523df2725a4">
+        <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/release/rxtx-2.1.7_a4612b5ae593e73ff034389d9b025761db4c70ca.jar" />
+    </item>
+    <item
+        jar="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="ec75036c3c52e451d0cde50a5aedaf5fd32354a0">
+        <dex dex="/Users/timsheu/Documents/Project/Android/NuWicam Player/app/build/intermediates/pre-dexed/release/com.android.support-recyclerview-v7-23.4.0_bea1d7220ef5682a496f7decc92d95bc36d65c9c.jar" />
     </item>
 
 </items>

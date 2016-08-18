@@ -98,7 +98,7 @@
         <Preference
             android:key="APP Version Number"
             android:title="NuMaker NuWicam"
-            android:summary="APP Version 1.1.6"
+            android:summary="APP Version 1.1.7"
             />
         <ListPreference
             android:key="Send Report"
