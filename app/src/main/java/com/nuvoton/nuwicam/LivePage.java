@@ -13,6 +13,7 @@ import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.nuvoton.socketmanager.ReadConfigure;
 
 import android.app.FragmentManager;
@@ -99,7 +100,11 @@ public class LivePage extends AppCompatActivity implements LiveFragment.OnHideBo
                 }
                 break;
         }
-
+//        Log.d(TAG, "onCreate: before get token");
+        String token = FirebaseInstanceId.getInstance().getToken();
+        if (token != null){
+            Log.d(TAG, "onCreate: token" + token);
+        }
     }
 
     @Override

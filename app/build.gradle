@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    buildToolsVersion '24'
 
     defaultConfig {
         applicationId "com.nuvoton.nuwicam"
@@ -35,6 +35,7 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile group: 'org.rxtx', name: 'rxtx', version: '2.1.7'
     compile 'ch.acra:acra:4.9.0'
-
+    compile 'com.google.firebase:firebase-messaging:9.4.0'
 }
 
+apply plugin: 'com.google.gms.google-services'

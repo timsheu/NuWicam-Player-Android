@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "924285319412",
+    "firebase_url": "https://numaker-nuwicam-c27aa.firebaseio.com",
+    "project_id": "numaker-nuwicam-c27aa",
+    "storage_bucket": "numaker-nuwicam-c27aa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:924285319412:android:1dffcceb3e0412ff",
+        "android_client_info": {
+          "package_name": "com.nuvoton.nuwicam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "924285319412-7ovmb0jf7769l28mn3l4dvep5288l60g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nuvoton.nuwicam",
+            "certificate_hash": "6297D463369E7AE8F87C0C8E2E633434D5DFA63C"
+          }
+        },
+        {
+          "client_id": "924285319412-ma6vo55r9uasg8930qb2u7qcq4f7k2ep.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmd-vLvtJewnGXJRrvyYU3CA2VgvtHRm4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "924285319412-u4heea8csfsccmq80fq5jet430a5h4rs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.nuvoton.nuwicam",
+                "app_store_id": "1114711093"
+              }
+            },
+            {
+              "client_id": "924285319412-ma6vo55r9uasg8930qb2u7qcq4f7k2ep.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
